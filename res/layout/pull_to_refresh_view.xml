@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ab.view.pullview.AbPullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mPullRefreshView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_white"
+    android:orientation="vertical" >
+    
+    <!--
+          这里放置listview,gridview或者scrollview的布局 ,PullToRefreshView
+	要设置android:orientation="vertical"属性
+	否则,显示不正确
+    -->
+
+    <ScrollView
+        android:id="@+id/mScrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#00000000" >
+
+        <TextView
+            android:id="@+id/mTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="下拉看看吧"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="15sp" />
+    </ScrollView>
+
+</com.ab.view.pullview.AbPullToRefreshView>
