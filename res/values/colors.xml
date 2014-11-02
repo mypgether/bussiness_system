@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
+    <color name="green_dark">#9CDC6A</color>
+    <color name="blue">#33B5E5</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#7c7c7c</color>
+    <color name="gray_white">#ebebeb</color>
+    <color name="gray_light">#887c7c7c</color>
+    <color name="gray_dark">#2e2e2e</color>
+    <color name="yellow">#FFFC00</color>
+    <color name="pink">#FF87EF</color>
+    <color name="orange">#ff6200</color>
+    <color name="list_divider">#D3D3D3</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_bg">#88838B8B</color>
+    <!-- dialog的颜色配置 -->
+    <color name="divider_color">#11000000</color>
+    <color name="msg_color">#FFFFFFFF</color>
+    <color name="dialog_bg">#ffe74c3c</color>
+    <color name="text_color">#FFFFFF</color>
+    <color name="focused">#87CEFA</color>
+    <color name="btn_press_color">#66000000</color>
+    <color name="btn_unpress_color">#22000000</color>
+    <!-- 导航栏的菜单栏 -->
+    <color name="list_item_title">#fff</color>
+    <color name="list_background">#303030</color>
+    <color name="list_background_pressed">#992416</color>
+    <color name="counter_text_bg">#FF0000</color>
+    <color name="counter_text_color">#c5c4c4</color>
+    <!-- <color name="counter_text_bg">#626262</color> -->
+
+</resources>

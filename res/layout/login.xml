@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_white" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/topPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFE74C3C"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/title_template"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dip"
+                android:layout_marginStart="16dip" >
+
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/alertTitle"
+                    style="@style/DialogWindowTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="8dip"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/login_title" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <RelativeLayout
+            android:id="@+id/layout01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip" >
+
+            <EditText
+                android:id="@+id/userId"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:hint="@string/userId"
+                android:inputType="text"
+                android:maxLength="20"
+                android:paddingBottom="10dip"
+                android:singleLine="true"
+                android:textColor="@color/gray"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/clearId"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/clear_icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout02"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="20dip" >
+
+            <EditText
+                android:id="@+id/userPwd"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:hint="@string/userPwd"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:paddingBottom="10dip"
+                android:singleLine="true"
+                android:textColor="@color/gray"
+                android:textSize="18sp" >
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/clearPwd"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/clear_icon" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout03"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/login_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rem_pwd"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/pwdBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_selector_blue_light"
+                android:paddingLeft="5dip"
+                android:paddingRight="5dip"
+                android:text="@string/find_pwd"
+                android:textColor="@color/gray_light"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/loginBtn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_selector_yellow"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/cancelBtn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dip"
+                android:background="@drawable/button_selector_white"
+                android:text="@string/cancel"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
