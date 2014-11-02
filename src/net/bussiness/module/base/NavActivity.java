@@ -6,15 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 import net.bussiness.activities.R;
+<<<<<<< HEAD
 import net.bussiness.dao.YwsqDao;
+=======
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 import net.bussiness.dialog.lib.Effectstype;
 import net.bussiness.dialog.lib.NiftyDialogBuilder;
 import net.bussiness.module.base.NavMenuFragment.SLMenuOnItemClickListener;
 import net.bussiness.module.individualcenter.IndividualCenter;
+<<<<<<< HEAD
 import net.bussiness.module.ywsq.YwsqSlidingTabFragment;
 import net.bussiness.tools.ConstServer;
 import net.bussiness.tools.JacksonUtils;
 import net.bussiness.tools.NetworkWeb;
+=======
+import net.bussiness.module.ywsq.SlidingTabFragment;
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -32,7 +39,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import com.ab.http.AbHttpListener;
+=======
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 import com.ab.util.AbToastUtil;
 import com.ab.view.slidingmenu.SlidingMenu;
 import com.ab.view.slidingmenu.SlidingMenu.CanvasTransformer;
@@ -125,7 +135,11 @@ public class NavActivity extends FragmentActivity implements
 		list = new ArrayList<Fragment>();
 		list.add(new IndividualCenter());
 		list.add(new IndividualCenter());
+<<<<<<< HEAD
 		list.add(new YwsqSlidingTabFragment());
+=======
+		list.add(new SlidingTabFragment());
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 		list.add(new IndividualCenter());
 		list.add(new IndividualCenter());
 		list.add(new IndividualCenter());

@@ -3,15 +3,19 @@ package net.bussiness.module.user;
 import net.bussiness.activities.R;
 import net.bussiness.dao.UserDao;
 import net.bussiness.module.base.NavActivity;
+<<<<<<< HEAD
 import net.bussiness.tools.ConstServer;
 import net.bussiness.tools.IApplication;
 import net.bussiness.tools.JacksonUtils;
 import net.bussiness.tools.NetworkWeb;
+=======
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 import net.bussiness.tools.StringUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+<<<<<<< HEAD
 import android.widget.CheckBox;
 import android.widget.EditText;
 
@@ -19,6 +23,11 @@ import com.ab.activity.AbActivity;
 import com.ab.http.AbHttpListener;
 import com.ab.http.AbRequestParams;
 import com.ab.util.AbSharedUtil;
+=======
+import android.widget.EditText;
+
+import com.ab.activity.AbActivity;
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 import com.ab.util.AbToastUtil;
 
 public class LoginActivity extends AbActivity implements OnClickListener {
@@ -27,6 +36,7 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+<<<<<<< HEAD
 		UserDao currentUser = getUserfromSharedPreference();
 		if (currentUser != null) {
 			IApplication iApplication = (IApplication) getApplication();
@@ -34,6 +44,8 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 			startActivity(new Intent(LoginActivity.this, NavActivity.class));
 			finish();
 		}
+=======
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		this.setFinishOnTouchOutside(false);
@@ -47,6 +59,13 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 	}
 
 	@Override
+<<<<<<< HEAD
+=======
+	public void onBackPressed() {
+	}
+
+	@Override
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.clearId:
@@ -59,6 +78,7 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 			startActivity(new Intent(LoginActivity.this, FindPwdActivity.class));
 			break;
 		case R.id.loginBtn:
+<<<<<<< HEAD
 			String userId = userIdEt.getText().toString().trim();
 			String pwd = userPwdEt.getText().toString().trim();
 			if (StringUtils.isBlank(userId) || StringUtils.isBlank(pwd)) {
@@ -72,12 +92,31 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 				return;
 			}
 			login(userId, pwd);
+=======
+			UserDao user = new UserDao();
+			String userId = userIdEt.getText().toString();
+			String pwd = userPwdEt.getText().toString();
+			if (StringUtils.isBlank(userId) || StringUtils.isBlank(pwd)) {
+				AbToastUtil.showToast(getApplicationContext(), "员工编号或密码不能为空！");
+				return;
+			}
+			try {
+				user.setUserId(Integer.parseInt(userId));
+			} catch (Exception e) {
+				AbToastUtil.showToast(getApplicationContext(), "请输入正确的员工编号！");
+				return;
+			}
+			user.setPassword(pwd);
+			startActivity(new Intent(LoginActivity.this, NavActivity.class));
+			finish();
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 			break;
 		case R.id.cancelBtn:
 			System.exit(0);
 			break;
 		}
 	}
+<<<<<<< HEAD
 
 	private void login(String userId, String pwd) {
 		NetworkWeb web = NetworkWeb.newInstance(LoginActivity.this);
@@ -128,4 +167,6 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 		AbSharedUtil.putString(LoginActivity.this, "pwd",
 				currentUser.getPassword());
 	}
+=======
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 }

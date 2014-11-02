@@ -19,9 +19,12 @@ public abstract class BaseFragmentLoad extends AbFragment {
 	protected ListView mListView = null;
 	protected Activity mActivity = null;
 
+<<<<<<< HEAD
 	protected int nowPage = 1;
 	protected int rows = 1;
 
+=======
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 	@Override
 	public View onCreateContentView(LayoutInflater inflater,
 			ViewGroup container, Bundle savedInstanceState) {
@@ -92,9 +95,13 @@ public abstract class BaseFragmentLoad extends AbFragment {
 	 * Version: 1.0
 	 * </pre>
 	 */
+<<<<<<< HEAD
 	public void refreshTask() {
 		nowPage = 1;
 	}
+=======
+	public abstract void refreshTask();
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 
 	/**
 	 * <pre>
@@ -104,7 +111,11 @@ public abstract class BaseFragmentLoad extends AbFragment {
 	 * Version: 1.0
 	 * </pre>
 	 */
+<<<<<<< HEAD
 	public void loadMoreTask() {
 		nowPage++;
 	}
+=======
+	public abstract void loadMoreTask();
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 }

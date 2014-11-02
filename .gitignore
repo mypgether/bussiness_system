@@ -25,4 +25,8 @@ local.properties
 proguard.cfg
 
 #OSX
+<<<<<<< HEAD
 .DS_Store
+=======
+.DS_Store
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f

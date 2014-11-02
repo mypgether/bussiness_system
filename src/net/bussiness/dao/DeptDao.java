@@ -1,10 +1,17 @@
 package net.bussiness.dao;
 
 import java.util.Date;
+<<<<<<< HEAD
 
 /**
  * Dept entity. @author MyEclipse Persistence Tools
  */
+=======
+import java.util.HashSet;
+import java.util.Set;
+
+@SuppressWarnings("serial")
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 public class DeptDao implements java.io.Serializable {
 
 	// Fields
@@ -14,6 +21,11 @@ public class DeptDao implements java.io.Serializable {
 	private Integer createrId;
 	private Date createTime;
 	private String description;
+<<<<<<< HEAD
+=======
+	private Set<PositionDao> positions = new HashSet<PositionDao>(0);
+	private Set<UserDao> users = new HashSet<UserDao>(0);
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 
 	// Constructors
 
@@ -23,14 +35,25 @@ public class DeptDao implements java.io.Serializable {
 
 	/** full constructor */
 	public DeptDao(String deptName, Integer createrId, Date createTime,
+<<<<<<< HEAD
 			String description) {
+=======
+			String description, Set<PositionDao> positions, Set<UserDao> users) {
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 		this.deptName = deptName;
 		this.createrId = createrId;
 		this.createTime = createTime;
 		this.description = description;
+<<<<<<< HEAD
 	}
 
 	// Property accessors
+=======
+		this.positions = positions;
+		this.users = users;
+	}
+
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 	public Integer getId() {
 		return this.id;
 	}
@@ -71,6 +94,7 @@ public class DeptDao implements java.io.Serializable {
 		this.description = description;
 	}
 
+<<<<<<< HEAD
 	@Override
 	public String toString() {
 		return "DeptDao [id=" + id + ", deptName=" + deptName + ", createrId="
@@ -78,4 +102,21 @@ public class DeptDao implements java.io.Serializable {
 				+ description + "]";
 	}
 
+=======
+	public Set<PositionDao> getPositions() {
+		return this.positions;
+	}
+
+	public void setPositions(Set<PositionDao> positions) {
+		this.positions = positions;
+	}
+
+	public Set<UserDao> getUsers() {
+		return this.users;
+	}
+
+	public void setUsers(Set<UserDao> users) {
+		this.users = users;
+	}
+>>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 }
