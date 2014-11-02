@@ -1,17 +1,11 @@
 package net.bussiness.dao;
 
-<<<<<<< HEAD
 import java.util.Arrays;
 import java.util.Date;
 
 /**
  * Chatmsg entity. @author MyEclipse Persistence Tools
  */
-=======
-import java.util.Date;
-
-@SuppressWarnings("serial")
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 public class ChatmsgDao implements java.io.Serializable {
 
 	// Fields
@@ -30,24 +24,16 @@ public class ChatmsgDao implements java.io.Serializable {
 	}
 
 	/** full constructor */
-<<<<<<< HEAD
 	public ChatmsgDao(UserDao userBySenderId, UserDao userByReceiverId,
 			Integer msgType, byte[] msgContent, Date msgTime) {
-=======
-	public ChatmsgDao(UserDao userBySenderId, UserDao userByReceiverId, Integer msgType,
-			byte[] msgContent, Date msgTime) {
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 		this.userBySenderId = userBySenderId;
 		this.userByReceiverId = userByReceiverId;
 		this.msgType = msgType;
 		this.msgContent = msgContent;
 		this.msgTime = msgTime;
 	}
-<<<<<<< HEAD
 
 	// Property accessors
-=======
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 	public Integer getMsgId() {
 		return this.msgId;
 	}
@@ -95,7 +81,6 @@ public class ChatmsgDao implements java.io.Serializable {
 	public void setMsgTime(Date msgTime) {
 		this.msgTime = msgTime;
 	}
-<<<<<<< HEAD
 
 	@Override
 	public String toString() {
@@ -104,6 +89,4 @@ public class ChatmsgDao implements java.io.Serializable {
 				+ msgTime + "]";
 	}
 
-=======
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 }

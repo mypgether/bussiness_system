@@ -2,13 +2,9 @@ package net.bussiness.dao;
 
 import java.util.Date;
 
-<<<<<<< HEAD
 /**
  * Ywnr entity. @author MyEclipse Persistence Tools
  */
-=======
-@SuppressWarnings("serial")
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 public class YwnrDao implements java.io.Serializable {
 
 	// Fields
@@ -17,10 +13,6 @@ public class YwnrDao implements java.io.Serializable {
 	private YwsqDao ywsq;
 	private Date nrTime;
 	private String nrLocation;
-<<<<<<< HEAD
-=======
-	private byte[] nrPhoto;
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 	private String description;
 
 	// Constructors
@@ -31,18 +23,10 @@ public class YwnrDao implements java.io.Serializable {
 
 	/** full constructor */
 	public YwnrDao(YwsqDao ywsq, Date nrTime, String nrLocation,
-<<<<<<< HEAD
 			String description) {
 		this.ywsq = ywsq;
 		this.nrTime = nrTime;
 		this.nrLocation = nrLocation;
-=======
-			byte[] nrPhoto, String description) {
-		this.ywsq = ywsq;
-		this.nrTime = nrTime;
-		this.nrLocation = nrLocation;
-		this.nrPhoto = nrPhoto;
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 		this.description = description;
 	}
 
@@ -56,11 +40,7 @@ public class YwnrDao implements java.io.Serializable {
 	}
 
 	public YwsqDao getYwsq() {
-<<<<<<< HEAD
 		return ywsq;
-=======
-		return this.ywsq;
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 	}
 
 	public void setYwsq(YwsqDao ywsq) {
@@ -83,17 +63,6 @@ public class YwnrDao implements java.io.Serializable {
 		this.nrLocation = nrLocation;
 	}
 
-<<<<<<< HEAD
-=======
-	public byte[] getNrPhoto() {
-		return this.nrPhoto;
-	}
-
-	public void setNrPhoto(byte[] nrPhoto) {
-		this.nrPhoto = nrPhoto;
-	}
-
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 	public String getDescription() {
 		return this.description;
 	}
@@ -101,7 +70,6 @@ public class YwnrDao implements java.io.Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-<<<<<<< HEAD
 
 	@Override
 	public String toString() {
@@ -109,6 +77,4 @@ public class YwnrDao implements java.io.Serializable {
 				+ nrLocation + ", description=" + description + "]";
 	}
 
-=======
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 }

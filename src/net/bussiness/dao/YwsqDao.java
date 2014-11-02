@@ -1,17 +1,10 @@
 package net.bussiness.dao;
 
 import java.util.Date;
-<<<<<<< HEAD
 
 /**
  * Ywsq entity. @author MyEclipse Persistence Tools
  */
-=======
-import java.util.HashSet;
-import java.util.Set;
-
-@SuppressWarnings("serial")
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 public class YwsqDao implements java.io.Serializable {
 
 	// Fields
@@ -26,11 +19,6 @@ public class YwsqDao implements java.io.Serializable {
 	private Integer approveState;
 	private Date approveTime;
 	private String approveReason;
-<<<<<<< HEAD
-=======
-	private Set<YwnrDao> ywnrs = new HashSet<YwnrDao>(0);
-	private Set<YwpjDao> ywpjs = new HashSet<YwpjDao>(0);
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 
 	// Constructors
 
@@ -41,12 +29,7 @@ public class YwsqDao implements java.io.Serializable {
 	/** full constructor */
 	public YwsqDao(UserDao userByProposerId, UserDao userByApproverId,
 			String location, Date timestamp, String reason, Date applyTime,
-<<<<<<< HEAD
 			Integer approveState, Date approveTime, String approveReason) {
-=======
-			Integer approveState, Date approveTime, String approveReason,
-			Set<YwnrDao> ywnrs, Set<YwpjDao> ywpjs) {
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 		this.userByProposerId = userByProposerId;
 		this.userByApproverId = userByApproverId;
 		this.location = location;
@@ -56,16 +39,9 @@ public class YwsqDao implements java.io.Serializable {
 		this.approveState = approveState;
 		this.approveTime = approveTime;
 		this.approveReason = approveReason;
-<<<<<<< HEAD
 	}
 
 	// Property accessors
-=======
-		this.ywnrs = ywnrs;
-		this.ywpjs = ywpjs;
-	}
-
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 	public Integer getYwId() {
 		return this.ywId;
 	}
@@ -146,7 +122,6 @@ public class YwsqDao implements java.io.Serializable {
 		this.approveReason = approveReason;
 	}
 
-<<<<<<< HEAD
 	@Override
 	public String toString() {
 		return "YwsqDao [ywId=" + ywId + ", location=" + location
@@ -156,21 +131,4 @@ public class YwsqDao implements java.io.Serializable {
 				+ approveReason + "]";
 	}
 
-=======
-	public Set<YwnrDao> getYwnrs() {
-		return this.ywnrs;
-	}
-
-	public void setYwnrs(Set<YwnrDao> ywnrs) {
-		this.ywnrs = ywnrs;
-	}
-
-	public Set<YwpjDao> getYwpjs() {
-		return this.ywpjs;
-	}
-
-	public void setYwpjs(Set<YwpjDao> ywpjs) {
-		this.ywpjs = ywpjs;
-	}
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 }

@@ -1,12 +1,8 @@
 package net.bussiness.dao;
 
-<<<<<<< HEAD
 /**
  * Position entity. @author MyEclipse Persistence Tools
  */
-=======
-@SuppressWarnings("serial")
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 public class PositionDao implements java.io.Serializable {
 
 	// Fields
@@ -27,10 +23,7 @@ public class PositionDao implements java.io.Serializable {
 		this.description = description;
 	}
 
-<<<<<<< HEAD
 	// Property accessors
-=======
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 	public Integer getId() {
 		return this.id;
 	}
@@ -54,7 +47,6 @@ public class PositionDao implements java.io.Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-<<<<<<< HEAD
 
 	@Override
 	public String toString() {
@@ -62,6 +54,4 @@ public class PositionDao implements java.io.Serializable {
 				+ description + "]";
 	}
 
-=======
->>>>>>> 3a533ba27428b86a95b76152af51d97058d0c69f
 }
