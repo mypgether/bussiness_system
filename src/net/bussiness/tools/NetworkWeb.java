@@ -41,6 +41,8 @@ public class NetworkWeb {
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
+				System.out.println("code=" + statusCode + " "
+						+ error.toString());
 				abHttpListener.onFailure(content);
 			}
 

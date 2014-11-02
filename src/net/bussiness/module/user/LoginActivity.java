@@ -31,6 +31,7 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 		if (currentUser != null) {
 			IApplication iApplication = (IApplication) getApplication();
 			iApplication.setCurrentUser(currentUser);
+			login(currentUser.getUserId() + "", currentUser.getPassword(), true);
 			startActivity(new Intent(LoginActivity.this, NavActivity.class));
 			finish();
 		}
@@ -71,7 +72,7 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 				AbToastUtil.showToast(LoginActivity.this, "请输入正确的员工编号！");
 				return;
 			}
-			login(userId, pwd);
+			login(userId, pwd, true);
 			break;
 		case R.id.cancelBtn:
 			System.exit(0);
@@ -79,7 +80,7 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 		}
 	}
 
-	private void login(String userId, String pwd) {
+	private void login(String userId, String pwd, final boolean isFirst) {
 		NetworkWeb web = NetworkWeb.newInstance(LoginActivity.this);
 		AbRequestParams params = new AbRequestParams();
 		params.put("userId", userId);
@@ -88,18 +89,22 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 			@Override
 			public void onSuccess(String content) {
 				super.onSuccess(content);
-				UserDao currentUser = (UserDao) JacksonUtils.json2Bean(content,
-						UserDao.class);
-				if (currentUser == null) {
-					AbToastUtil.showToast(LoginActivity.this, "员工编号和密码不匹配！");
-				} else {
-					IApplication iApplication = (IApplication) getApplication();
-					iApplication.setCurrentUser(currentUser);
-					if (((CheckBox) findViewById(R.id.login_check)).isChecked())
-						save2SharedPreference(currentUser);
-					startActivity(new Intent(LoginActivity.this,
-							NavActivity.class));
-					finish();
+				if (isFirst) {
+					UserDao currentUser = (UserDao) JacksonUtils.json2Bean(
+							content, UserDao.class);
+					if (currentUser == null) {
+						AbToastUtil
+								.showToast(LoginActivity.this, "员工编号和密码不匹配！");
+					} else {
+						IApplication iApplication = (IApplication) getApplication();
+						iApplication.setCurrentUser(currentUser);
+						if (((CheckBox) findViewById(R.id.login_check))
+								.isChecked())
+							save2SharedPreference(currentUser);
+						startActivity(new Intent(LoginActivity.this,
+								NavActivity.class));
+						finish();
+					}
 				}
 			}
 
