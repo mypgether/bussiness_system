@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ab.view.pullview.AbPullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mPullRefreshView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_white"
+    android:orientation="vertical" >
+
+    <ExpandableListView
+        android:id="@+id/mExpandableListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffff"
+        android:cacheColorHint="#00000000"
+        android:divider="@drawable/list_divider"
+        android:listSelector="#00000000" />
+
+</com.ab.view.pullview.AbPullToRefreshView>

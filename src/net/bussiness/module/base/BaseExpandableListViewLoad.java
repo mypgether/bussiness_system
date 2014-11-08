@@ -6,17 +6,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 
 import com.ab.fragment.AbFragment;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 
-public abstract class BaseFragmentLoad extends AbFragment {
+public abstract class BaseExpandableListViewLoad extends AbFragment {
 
 	protected AbPullToRefreshView mAbPullToRefreshView = null;
-	protected ListView mListView = null;
+	protected ExpandableListView mExpandableListView = null;
 	protected Activity mActivity = null;
 
 	protected int nowPage = 1;
@@ -26,11 +26,12 @@ public abstract class BaseFragmentLoad extends AbFragment {
 	public View onCreateContentView(LayoutInflater inflater,
 			ViewGroup container, Bundle savedInstanceState) {
 		mActivity = getActivity();
-		View view = inflater.inflate(R.layout.pull_to_refresh_list, null);
+		View view = inflater.inflate(R.layout.pull_to_refresh_expandlist, null);
 		// 获取ListView对象
 		mAbPullToRefreshView = (AbPullToRefreshView) view
 				.findViewById(R.id.mPullRefreshView);
-		mListView = (ListView) view.findViewById(R.id.mListView);
+		mExpandableListView = (ExpandableListView) view
+				.findViewById(R.id.mExpandableListView);
 		initViewAdapter();
 		// 设置监听器
 		mAbPullToRefreshView

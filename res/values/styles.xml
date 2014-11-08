@@ -103,4 +103,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="my_tv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#444</item>
+    </style>
+
 </resources>
