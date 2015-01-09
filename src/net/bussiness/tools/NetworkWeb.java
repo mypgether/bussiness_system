@@ -59,19 +59,19 @@ public class NetworkWeb {
 			@Override
 			public void onSuccess(int statusCode, String content) {
 				// try {
-				// Ä£ÄâÊı¾İ
+				// æ¨¡æ‹Ÿæ•°æ®
 				// AbResult result = new AbResult(content);
 				// if (result.getResultCode() > 0) {
-				// // ³É¹¦
+				// // æˆåŠŸ
 				// // ArticleListResult mArticleListResult =
 				// // (ArticleListResult) AbJsonUtil
 				// // .fromJson(content, ArticleListResult.class);
 				// // List<Article> articleList = mArticleListResult
 				// // .getItems();
-				// // ½«½á¹û´«µİ»ØÈ¥
+				// // å°†ç»“æœä¼ é€’å›å»
 				// abHttpListener.onSuccess(content);
 				// } else {
-				// // ½«´íÎóĞÅÏ¢´«µİ»ØÈ¥
+				// // å°†é”™è¯¯ä¿¡æ¯ä¼ é€’å›å»
 				// abHttpListener.onFailure(result.getResultMessage());
 				// }
 				abHttpListener.onSuccess(content);
@@ -83,12 +83,12 @@ public class NetworkWeb {
 
 			@Override
 			public void onStart() {
-				// ¿ªÊ¼µÄ×´Ì¬´«µİ»ØÈ¥
+				// å¼€å§‹çš„çŠ¶æ€ä¼ é€’å›å»
 			}
 
 			@Override
 			public void onFinish() {
-				// Íê³ÉµÄ×´Ì¬´«µİ»ØÈ¥
+				// å®Œæˆçš„çŠ¶æ€ä¼ é€’å›å»
 			}
 
 			@Override

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/ywsq_child_tv1"
+        style="@style/my_tv"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/ywsq_child_tv2"
+        style="@style/my_tv"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/ywsq_child_tv3"
+        style="@style/my_tv"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/ywsq_child_tv4"
+        style="@style/my_tv"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/ywsq_child_tv5"
+        style="@style/my_tv"
+        android:layout_marginLeft="10dp" />
+
+</LinearLayout>

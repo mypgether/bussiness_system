@@ -13,7 +13,7 @@ import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
 import com.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 
-public abstract class BaseFragmentLoad extends AbFragment {
+public abstract class BaseListViewLoad extends AbFragment {
 
 	protected AbPullToRefreshView mAbPullToRefreshView = null;
 	protected ListView mListView = null;
@@ -27,12 +27,12 @@ public abstract class BaseFragmentLoad extends AbFragment {
 			ViewGroup container, Bundle savedInstanceState) {
 		mActivity = getActivity();
 		View view = inflater.inflate(R.layout.pull_to_refresh_list, null);
-		// »ñÈ¡ListView¶ÔÏó
+		// è·å–ListViewå¯¹è±¡
 		mAbPullToRefreshView = (AbPullToRefreshView) view
 				.findViewById(R.id.mPullRefreshView);
 		mListView = (ListView) view.findViewById(R.id.mListView);
 		initViewAdapter();
-		// ÉèÖÃ¼àÌıÆ÷
+		// è®¾ç½®ç›‘å¬å™¨
 		mAbPullToRefreshView
 				.setOnHeaderRefreshListener(new OnHeaderRefreshListener() {
 					@Override
@@ -48,13 +48,13 @@ public abstract class BaseFragmentLoad extends AbFragment {
 					}
 				});
 
-		// ÉèÖÃ½ø¶ÈÌõµÄÑùÊ½
+		// è®¾ç½®è¿›åº¦æ¡çš„æ ·å¼
 		mAbPullToRefreshView.getHeaderView().setHeaderProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 		mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 
-		// ¼ÓÔØÊı¾İ±ØĞë
+		// åŠ è½½æ•°æ®å¿…é¡»
 		this.setAbFragmentOnLoadListener(new AbFragmentOnLoadListener() {
 			@Override
 			public void onLoad() {
@@ -66,19 +66,19 @@ public abstract class BaseFragmentLoad extends AbFragment {
 
 	@Override
 	public void setResource() {
-		// ÉèÖÃ¼ÓÔØµÄ×ÊÔ´
+		// è®¾ç½®åŠ è½½çš„èµ„æº
 		this.setLoadDrawable(R.drawable.ic_load);
-		this.setLoadMessage("ÕıÔÚ²éÑ¯,ÇëÉÔºò");
+		this.setLoadMessage("æ­£åœ¨æŸ¥è¯¢,è¯·ç¨å€™");
 
 		this.setRefreshDrawable(R.drawable.ic_refresh);
-		this.setRefreshMessage("ÇëÇó³ö´í£¬ÇëÖØÊÔ");
+		this.setRefreshMessage("è¯·æ±‚å‡ºé”™ï¼Œè¯·é‡è¯•");
 	}
 
 	/**
 	 * <pre>
-	 * Purpose:³õÊ¼»¯Adapter,Ìî³äµ½mListViewµ±ÖĞ
+	 * Purpose:åˆå§‹åŒ–Adapter,å¡«å……åˆ°mListViewå½“ä¸­
 	 * @author Myp
-	 * Create Time: 2014-10-26 ÏÂÎç2:17:31
+	 * Create Time: 2014-10-26 ä¸‹åˆ2:17:31
 	 * Version: 1.0
 	 * </pre>
 	 */
@@ -86,9 +86,9 @@ public abstract class BaseFragmentLoad extends AbFragment {
 
 	/**
 	 * <pre>
-	 * Purpose:Ë¢ĞÂÊı¾İ
+	 * Purpose:åˆ·æ–°æ•°æ®
 	 * @author Myp
-	 * Create Time: 2014-10-26 ÏÂÎç1:33:22
+	 * Create Time: 2014-10-26 ä¸‹åˆ1:33:22
 	 * Version: 1.0
 	 * </pre>
 	 */
@@ -98,9 +98,9 @@ public abstract class BaseFragmentLoad extends AbFragment {
 
 	/**
 	 * <pre>
-	 * Purpose:¼ÓÔØ¸ü¶àÊı¾İ
+	 * Purpose:åŠ è½½æ›´å¤šæ•°æ®
 	 * @author Myp
-	 * Create Time: 2014-10-26 ÏÂÎç1:33:27
+	 * Create Time: 2014-10-26 ä¸‹åˆ1:33:27
 	 * Version: 1.0
 	 * </pre>
 	 */

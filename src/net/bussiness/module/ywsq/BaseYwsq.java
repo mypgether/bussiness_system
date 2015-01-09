@@ -3,24 +3,27 @@ package net.bussiness.module.ywsq;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bussiness.dao.YwsqDao;
-import net.bussiness.module.base.BaseFragmentLoad;
+import net.bussiness.adapter.YwsqExpandableListViewAdapter;
+import net.bussiness.dto.YwsqDto;
+import net.bussiness.module.base.BaseExpandableListViewLoad;
 import net.bussiness.tools.JacksonUtils;
 import net.bussiness.tools.NetworkWeb;
 import android.app.Activity;
-import android.widget.ArrayAdapter;
 
 import com.ab.http.AbHttpListener;
 import com.ab.http.AbRequestParams;
 import com.ab.util.AbToastUtil;
 
-public class BaseYwsq extends BaseFragmentLoad {
+public class BaseYwsq extends BaseExpandableListViewLoad {
 
-	private ArrayAdapter<String> mAdapter = null;
-	private List<String> mContent = null;
+	private YwsqExpandableListViewAdapter mAdapter = null;
 	private String url = null;
 	private int approveState = 0;
 	private NetworkWeb networkWeb;
+
+	// ExpandableListViewÁöÑÊï∞ÊçÆÊ∫ê
+	private List<YwsqDto> group;
+	private List<List<YwsqDto>> child;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -32,14 +35,15 @@ public class BaseYwsq extends BaseFragmentLoad {
 
 	@Override
 	public void initViewAdapter() {
-		mContent = new ArrayList<String>();
-		mAdapter = new ArrayAdapter<String>(mActivity,
-				android.R.layout.simple_list_item_1, mContent);
-		mListView.setAdapter(mAdapter);
+		group = new ArrayList<YwsqDto>();
+		child = new ArrayList<List<YwsqDto>>();
+		mAdapter = new YwsqExpandableListViewAdapter(mActivity, group, child,
+				approveState == 0);
+		mExpandableListView.setAdapter(mAdapter);
 	}
 
 	/**
-	 * œ¬‘ÿ ˝æ›
+	 * ‰∏ãËΩΩÊï∞ÊçÆ
 	 */
 	public void refreshTask() {
 		super.refreshTask();
@@ -49,12 +53,15 @@ public class BaseYwsq extends BaseFragmentLoad {
 			@Override
 			public void onSuccess(String content) {
 				super.onSuccess(content);
-				List<YwsqDao> dao = (List<YwsqDao>) JacksonUtils
-						.jsonPageResult2Bean("rows", content, YwsqDao.class);
-				mContent.clear();
-				for (YwsqDao tmp : dao) {
-					mContent.add(tmp.toString());
+				List<YwsqDto> dao = (List<YwsqDto>) JacksonUtils
+						.jsonPageResult2Bean("rows", content, YwsqDto.class);
+				group.clear();
+				child.clear();
+				for (YwsqDto tmp : dao) {
+					group.add(tmp);
 				}
+				child.add(dao);
+				mAdapter.notifyDataSetChanged();
 				mAbPullToRefreshView.onHeaderRefreshFinish();
 				showContentView();
 			}
@@ -74,13 +81,14 @@ public class BaseYwsq extends BaseFragmentLoad {
 			@Override
 			public void onSuccess(String content) {
 				super.onSuccess(content);
-				List<YwsqDao> dao = (List<YwsqDao>) JacksonUtils
-						.jsonPageResult2Bean("rows", content, YwsqDao.class);
-				for (YwsqDao tmp : dao) {
-					mContent.add(tmp.toString());
+				List<YwsqDto> dao = (List<YwsqDto>) JacksonUtils
+						.jsonPageResult2Bean("rows", content, YwsqDto.class);
+				for (YwsqDto tmp : dao) {
+					group.add(tmp);
 				}
-				mAbPullToRefreshView.onFooterLoadFinish();
+				child.add(dao);
 				mAdapter.notifyDataSetChanged();
+				mAbPullToRefreshView.onFooterLoadFinish();
 			}
 
 			@Override

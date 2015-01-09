@@ -13,9 +13,9 @@ public class YwsqSlidingTabFragment extends BaseSlidingTabFragment {
 		mFragments.add(addFragment(1));
 		mFragments.add(addFragment(2));
 		mFragments.add(addFragment(0));
-		tabTexts.add("ÉóÅúÍ¨¹ı");
-		tabTexts.add("ÉóÅú¾Ü¾ø");
-		tabTexts.add("´ıÉóÅú");
+		tabTexts.add("å®¡æ‰¹é€šè¿‡");
+		tabTexts.add("å®¡æ‰¹æ‹’ç»");
+		tabTexts.add("å¾…å®¡æ‰¹");
 	}
 
 	private Fragment addFragment(int approveState) {

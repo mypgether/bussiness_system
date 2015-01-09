@@ -3,10 +3,10 @@ package net.bussiness.module.individualcenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bussiness.module.base.BaseFragmentLoad;
+import net.bussiness.module.base.BaseListViewLoad;
 import android.widget.ArrayAdapter;
 
-public class IndividualCenter extends BaseFragmentLoad {
+public class IndividualCenter extends BaseListViewLoad {
 
 	private ArrayAdapter<String> mAdapter = null;
 	private List<String> mContent = null;
@@ -19,9 +19,6 @@ public class IndividualCenter extends BaseFragmentLoad {
 		mListView.setAdapter(mAdapter);
 	}
 
-	/**
-	 * ÏÂÔØÊý¾Ý
-	 */
 	public void refreshTask() {
 	}
 

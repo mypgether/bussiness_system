@@ -1,7 +1,7 @@
 package net.bussiness.module.user;
 
 import net.bussiness.activities.R;
-import net.bussiness.dao.UserDao;
+import net.bussiness.dto.UserDto;
 import net.bussiness.tools.StringUtils;
 import android.os.Bundle;
 import android.view.View;
@@ -37,17 +37,17 @@ public class FindPwdActivity extends AbActivity implements OnClickListener {
 			emailEt.setText("");
 			break;
 		case R.id.findPwdBtn:
-			UserDao user = new UserDao();
+			UserDto user = new UserDto();
 			String userId = userIdEt.getText().toString();
 			String email = emailEt.getText().toString();
 			if (StringUtils.isBlank(userId) || StringUtils.isBlank(email)) {
-				AbToastUtil.showToast(getApplicationContext(), "Ô±¹¤±àºÅ»òÓÊÏä²»ÄÜÎª¿Õ£¡");
+				AbToastUtil.showToast(getApplicationContext(), "å‘˜å·¥ç¼–å·æˆ–é‚®ç®±ä¸èƒ½ä¸ºç©ºï¼");
 				return;
 			}
 			try {
 				user.setUserId(Integer.parseInt(userId));
 			} catch (Exception e) {
-				AbToastUtil.showToast(getApplicationContext(), "ÇëÊäÈëÕıÈ·µÄÔ±¹¤±àºÅ£¡");
+				AbToastUtil.showToast(getApplicationContext(), "è¯·è¾“å…¥æ­£ç¡®çš„å‘˜å·¥ç¼–å·ï¼");
 				return;
 			}
 			user.setEmail(email);
