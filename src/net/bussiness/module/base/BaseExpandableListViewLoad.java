@@ -27,13 +27,11 @@ public abstract class BaseExpandableListViewLoad extends AbFragment {
 			ViewGroup container, Bundle savedInstanceState) {
 		mActivity = getActivity();
 		View view = inflater.inflate(R.layout.pull_to_refresh_expandlist, null);
-		// »ñÈ¡ListView¶ÔÏó
 		mAbPullToRefreshView = (AbPullToRefreshView) view
 				.findViewById(R.id.mPullRefreshView);
 		mExpandableListView = (ExpandableListView) view
 				.findViewById(R.id.mExpandableListView);
 		initViewAdapter();
-		// ÉèÖÃ¼àÌıÆ÷
 		mAbPullToRefreshView
 				.setOnHeaderRefreshListener(new OnHeaderRefreshListener() {
 					@Override
@@ -49,13 +47,11 @@ public abstract class BaseExpandableListViewLoad extends AbFragment {
 					}
 				});
 
-		// ÉèÖÃ½ø¶ÈÌõµÄÑùÊ½
 		mAbPullToRefreshView.getHeaderView().setHeaderProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 		mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
 				this.getResources().getDrawable(R.drawable.progress_circular));
 
-		// ¼ÓÔØÊı¾İ±ØĞë
 		this.setAbFragmentOnLoadListener(new AbFragmentOnLoadListener() {
 			@Override
 			public void onLoad() {
@@ -67,19 +63,18 @@ public abstract class BaseExpandableListViewLoad extends AbFragment {
 
 	@Override
 	public void setResource() {
-		// ÉèÖÃ¼ÓÔØµÄ×ÊÔ´
 		this.setLoadDrawable(R.drawable.ic_load);
-		this.setLoadMessage("ÕıÔÚ²éÑ¯,ÇëÉÔºò");
+		this.setLoadMessage("æ­£åœ¨åŠ è½½,è¯·ç¨å...");
 
 		this.setRefreshDrawable(R.drawable.ic_refresh);
-		this.setRefreshMessage("ÇëÇó³ö´í£¬ÇëÖØÊÔ");
+		this.setRefreshMessage("æ­£åœ¨æ›´æ–°æ•°æ®,è¯·ç¨å...");
 	}
 
 	/**
 	 * <pre>
-	 * Purpose:³õÊ¼»¯Adapter,Ìî³äµ½mListViewµ±ÖĞ
+	 * Purpose:åˆå§‹åŒ–Adapter,ç»‘å®šListView
 	 * @author Myp
-	 * Create Time: 2014-10-26 ÏÂÎç2:17:31
+	 * Create Time: 2014-10-26 ä¸‹åˆ2:17:31
 	 * Version: 1.0
 	 * </pre>
 	 */
@@ -87,9 +82,9 @@ public abstract class BaseExpandableListViewLoad extends AbFragment {
 
 	/**
 	 * <pre>
-	 * Purpose:Ë¢ĞÂÊı¾İ
+	 * Purpose:åˆ·æ–°æ•°æ®
 	 * @author Myp
-	 * Create Time: 2014-10-26 ÏÂÎç1:33:22
+	 * Create Time: 2014-10-26 ä¸‹åˆ1:33:22
 	 * Version: 1.0
 	 * </pre>
 	 */
@@ -99,9 +94,9 @@ public abstract class BaseExpandableListViewLoad extends AbFragment {
 
 	/**
 	 * <pre>
-	 * Purpose:¼ÓÔØ¸ü¶àÊı¾İ
+	 * Purpose:åŠ è½½æ›´å¤šæ•°æ®î˜¿
 	 * @author Myp
-	 * Create Time: 2014-10-26 ÏÂÎç1:33:27
+	 * Create Time: 2014-10-26 ä¸‹åˆ1:33:27
 	 * Version: 1.0
 	 * </pre>
 	 */

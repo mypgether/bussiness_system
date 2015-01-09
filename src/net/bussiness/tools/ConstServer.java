@@ -1,16 +1,16 @@
 package net.bussiness.tools;
 
 public class ConstServer {
-	// private static StringBuffer SERVER_ROOT = new StringBuffer(
-	// "http://192.168.191.1:8080/bussiness/");
+	private static StringBuffer SERVER_ROOT = new StringBuffer(
+			"http://192.168.191.1:8080/bussiness/");
 
 	// private static StringBuffer SERVER_ROOT = new StringBuffer(
 	// "http://192.168.2.127:8080/bussiness/");
-	private static StringBuffer SERVER_ROOT = new StringBuffer(
-			"http://10.0.2.2::8080/bussiness/");
+	// private static StringBuffer SERVER_ROOT = new StringBuffer(
+	// "http://10.0.2.2::8080/bussiness/");
 
 	/*
-	 * µÇÂ¼Ä£¿é
+	 * ç™»å½•æ¨¡å—å¼€å§‹
 	 */
 	public static String LOGIN() {
 		StringBuffer sb = new StringBuffer(SERVER_ROOT.toString());
@@ -18,7 +18,23 @@ public class ConstServer {
 	}
 
 	/*
-	 * ÒµÎñÉêÇëÄ£¿é
+	 * ç™»å½•æ¨¡å—ç»“æŸ
+	 */
+
+	/*
+	 * ç”¨æˆ·æ¨¡å—å¼€å§‹
+	 */
+	public static String USER_PUSHINFO_UPDATE() {
+		StringBuffer sb = new StringBuffer(SERVER_ROOT.toString());
+		return sb.append("user/update").toString();
+	}
+
+	/*
+	 * ç”¨æˆ·æ¨¡å—ç»“æŸ
+	 */
+
+	/*
+	 * ä¸šåŠ¡ç”³è¯·æ¨¡å—
 	 */
 	public static StringBuffer GET_YWSQ_ROOT(String userId) {
 		StringBuffer sb = new StringBuffer(SERVER_ROOT.toString());
@@ -42,15 +58,18 @@ public class ConstServer {
 		return sb.append("ywsq/findYwsqsWithPage").toString();
 	}
 
-	// ²éÑ¯×Ô¼ºµÄÉêÇë
+	// æŸ¥è¯¢è‡ªå·±çš„ç”³è¯·
 	public static String YWSQ_FINDPROPOSE_WITHPC(String userId) {
 		return GET_YWSQ_ROOT(userId).append("findProposeYwsqsWithPC")
 				.toString();
 	}
 
-	// ²éÑ¯×Ô¼ºµÄÉóÅú
+	// æŸ¥è¯¢è‡ªå·±çš„å®¡æ‰¹
 	public static String YWSQ_FINDAPPROVE_WITHPC(String userId) {
 		return GET_YWSQ_ROOT(userId).append("findApproveYwsqsWithPC")
 				.toString();
 	}
+	/*
+	 * ä¸šåŠ¡ç”³è¯·æ¨¡å—ç»“æŸ
+	 */
 }

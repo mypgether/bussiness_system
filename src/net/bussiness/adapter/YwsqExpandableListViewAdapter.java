@@ -3,7 +3,7 @@ package net.bussiness.adapter;
 import java.util.List;
 
 import net.bussiness.activities.R;
-import net.bussiness.dao.YwsqDao;
+import net.bussiness.dto.YwsqDto;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,13 +13,13 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 public class YwsqExpandableListViewAdapter extends BaseExpandableListAdapter {
-	private List<YwsqDao> group; // ×éÁĞ±í
-	private List<List<YwsqDao>> child; // ×ÓÁĞ±í
+	private List<YwsqDto> group; // ç»„åˆ—è¡¨
+	private List<List<YwsqDto>> child; // å­åˆ—è¡¨
 	private Context mContext;
 	private boolean isApproving = false;
 
-	public YwsqExpandableListViewAdapter(Context context, List<YwsqDao> group,
-			List<List<YwsqDao>> child, boolean isApproving) {
+	public YwsqExpandableListViewAdapter(Context context, List<YwsqDto> group,
+			List<List<YwsqDto>> child, boolean isApproving) {
 		super();
 		this.mContext = context;
 		this.group = group;
@@ -66,20 +66,20 @@ public class YwsqExpandableListViewAdapter extends BaseExpandableListAdapter {
 		} else {
 			holder = (ChildViewHolder) convertView.getTag();
 		}
-		YwsqDao childItems = child.get(groupPosition).get(childPosition);
-		holder.tv1.setText("ÒµÎñ±àºÅ£º" + childItems.getYwId() + "");
+		YwsqDto childItems = child.get(groupPosition).get(childPosition);
+		holder.tv1.setText("ä¸šåŠ¡ç¼–å·ï¼š" + childItems.getYwId() + "");
 		if (isApproving) {
-			holder.tv2.setText("ÉêÇëÔ­Òò£º" + childItems.getReason());
+			holder.tv2.setText("ç”³è¯·åŸå› ï¼š" + childItems.getReason());
 			holder.tv3.setVisibility(View.GONE);
 			holder.tv4.setVisibility(View.GONE);
 			holder.tv5.setVisibility(View.GONE);
 		} else {
-			holder.tv2.setText("ÉêÇëÊ±¼ä£º"
+			holder.tv2.setText("ç”³è¯·æ—¶é—´ï¼š"
 					+ childItems.getApplyTime().toLocaleString());
-			holder.tv3.setText("ÉêÇëÔ­Òò£º" + childItems.getReason());
-			holder.tv4.setText("¿ªÊ¼Ê±¼ä£º"
+			holder.tv3.setText("ç”³è¯·åŸå› ï¼š" + childItems.getReason());
+			holder.tv4.setText("å¼€å§‹æ—¶é—´ï¼š"
 					+ childItems.getTimestamp().toLocaleString());
-			holder.tv5.setText("ÒµÎñµØµã£º" + childItems.getLocation());
+			holder.tv5.setText("ä¸šåŠ¡åœ°ç‚¹ï¼š" + childItems.getLocation());
 			holder.tv3.setVisibility(View.VISIBLE);
 			holder.tv4.setVisibility(View.VISIBLE);
 			holder.tv5.setVisibility(View.VISIBLE);
@@ -124,16 +124,16 @@ public class YwsqExpandableListViewAdapter extends BaseExpandableListAdapter {
 		} else {
 			holder = (GroupViewHolder) convertView.getTag();
 		}
-		YwsqDao groupItems = group.get(groupPosition);
+		YwsqDto groupItems = group.get(groupPosition);
 		if (isApproving) {
-			holder.tv1.setText("ÉêÇëÊ±¼ä£º"
+			holder.tv1.setText("ç”³è¯·æ—¶é—´ï¼š"
 					+ groupItems.getApplyTime().toLocaleString());
 			holder.tv2.setText(groupItems.getLocation());
-			holder.tv3.setText("¿ªÊ¼Ê±¼ä£º"
+			holder.tv3.setText("å¼€å§‹æ—¶é—´ï¼š"
 					+ groupItems.getTimestamp().toLocaleString());
 			holder.tv4.setText(groupItems.getReason());
 		} else {
-			holder.tv1.setText("ÉóÅúÊ±¼ä£º"
+			holder.tv1.setText("å®¡æ‰¹æ—¶é—´ï¼š"
 					+ groupItems.getApproveTime().toLocaleString());
 			holder.tv2.setText(groupItems.getUserByApproverId().getUserName());
 			holder.tv3.setText(groupItems.getApproveReason());

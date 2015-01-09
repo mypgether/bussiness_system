@@ -3,7 +3,7 @@ package net.bussiness.adapter;
 import java.util.List;
 
 import net.bussiness.activities.R;
-import net.bussiness.dao.NavMenuItemDao;
+import net.bussiness.dto.NavMenuItemDto;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,10 +16,10 @@ import android.widget.TextView;
 public class NavMenuListAdapter extends BaseAdapter {
 
 	private Context context;
-	private List<NavMenuItemDao> navDrawerItems;
+	private List<NavMenuItemDto> navDrawerItems;
 
 	public NavMenuListAdapter(Context context,
-			List<NavMenuItemDao> navDrawerItems) {
+			List<NavMenuItemDto> navDrawerItems) {
 		this.context = context;
 		this.navDrawerItems = navDrawerItems;
 	}

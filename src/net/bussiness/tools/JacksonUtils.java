@@ -14,10 +14,9 @@ public class JacksonUtils {
 	private static ObjectMapper mapper;
 
 	/**
-	 * Ò»¸öÆÆObjectMapper¶øÒÑ£¬ÄãÎªÊ²Ã´²»Ö±½Ónew »¹¸ãµÄÄÇÃ´¸´ÔÓ¡£½ÓÏÂÀ´µÄ¼¸ÆªÎÄÕÂÎÒ½«ºÍÄãÒ»ÆğÑĞ¾¿Õâ¸öÁîÈËµ°ÌÛµÄÎÊÌâ
 	 * 
 	 * @param createNew
-	 *            ÊÇ·ñ´´½¨Ò»¸öĞÂµÄMapper
+	 *            æ˜¯å¦åˆ›å»ºä¸€ä¸ªæ–°çš„Mapper
 	 * @return
 	 */
 	public static synchronized ObjectMapper getMapperInstance(boolean createNew) {
@@ -30,13 +29,13 @@ public class JacksonUtils {
 	}
 
 	/**
-	 * »ñÈ¡·ºĞÍµÄCollection Type
+	 * è·å–æ³›å‹çš„Collection Type
 	 * 
 	 * @param collectionClass
-	 *            ·ºĞÍµÄCollection
+	 *            æ³›å‹çš„Collection
 	 * @param elementClasses
-	 *            ÔªËØÀà
-	 * @return JavaType JavaÀàĞÍ
+	 *            å…ƒç´ ç±»
+	 * @return JavaType Javaç±»å‹
 	 * @since 1.0
 	 */
 	public static JavaType getCollectionType(Class<?> collectionClass,

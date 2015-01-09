@@ -2,10 +2,9 @@ package net.bussiness.module.ywsq;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import net.bussiness.adapter.YwsqExpandableListViewAdapter;
-import net.bussiness.dao.YwsqDao;
+import net.bussiness.dto.YwsqDto;
 import net.bussiness.module.base.BaseExpandableListViewLoad;
 import net.bussiness.tools.JacksonUtils;
 import net.bussiness.tools.NetworkWeb;
@@ -22,9 +21,9 @@ public class BaseYwsq extends BaseExpandableListViewLoad {
 	private int approveState = 0;
 	private NetworkWeb networkWeb;
 
-	// ExpandableListView的数据源
-	private List<YwsqDao> group;
-	private List<List<YwsqDao>> child;
+	// ExpandableListView鐨勬暟鎹簮
+	private List<YwsqDto> group;
+	private List<List<YwsqDto>> child;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -36,15 +35,15 @@ public class BaseYwsq extends BaseExpandableListViewLoad {
 
 	@Override
 	public void initViewAdapter() {
-		group = new ArrayList<YwsqDao>();
-		child = new ArrayList<List<YwsqDao>>();
+		group = new ArrayList<YwsqDto>();
+		child = new ArrayList<List<YwsqDto>>();
 		mAdapter = new YwsqExpandableListViewAdapter(mActivity, group, child,
 				approveState == 0);
 		mExpandableListView.setAdapter(mAdapter);
 	}
 
 	/**
-	 * 下载数据
+	 * 涓嬭浇鏁版嵁
 	 */
 	public void refreshTask() {
 		super.refreshTask();
@@ -54,11 +53,11 @@ public class BaseYwsq extends BaseExpandableListViewLoad {
 			@Override
 			public void onSuccess(String content) {
 				super.onSuccess(content);
-				List<YwsqDao> dao = (List<YwsqDao>) JacksonUtils
-						.jsonPageResult2Bean("rows", content, YwsqDao.class);
+				List<YwsqDto> dao = (List<YwsqDto>) JacksonUtils
+						.jsonPageResult2Bean("rows", content, YwsqDto.class);
 				group.clear();
 				child.clear();
-				for (YwsqDao tmp : dao) {
+				for (YwsqDto tmp : dao) {
 					group.add(tmp);
 				}
 				child.add(dao);
@@ -82,9 +81,9 @@ public class BaseYwsq extends BaseExpandableListViewLoad {
 			@Override
 			public void onSuccess(String content) {
 				super.onSuccess(content);
-				List<YwsqDao> dao = (List<YwsqDao>) JacksonUtils
-						.jsonPageResult2Bean("rows", content, YwsqDao.class);
-				for (YwsqDao tmp : dao) {
+				List<YwsqDto> dao = (List<YwsqDto>) JacksonUtils
+						.jsonPageResult2Bean("rows", content, YwsqDto.class);
+				for (YwsqDto tmp : dao) {
 					group.add(tmp);
 				}
 				child.add(dao);

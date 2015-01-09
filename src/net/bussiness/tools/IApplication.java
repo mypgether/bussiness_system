@@ -1,16 +1,17 @@
 package net.bussiness.tools;
 
-import net.bussiness.dao.UserDao;
-import android.app.Application;
+import net.bussiness.dto.UserDto;
 
-public class IApplication extends Application {
-	private UserDao currentUser;
+import com.baidu.frontia.FrontiaApplication;
 
-	public UserDao getCurrentUser() {
+public class IApplication extends FrontiaApplication {
+	private UserDto currentUser;
+
+	public UserDto getCurrentUser() {
 		return currentUser;
 	}
 
-	public void setCurrentUser(UserDao currentUser) {
+	public void setCurrentUser(UserDto currentUser) {
 		this.currentUser = currentUser;
 	}
 }

@@ -1,7 +1,7 @@
 package net.bussiness.module.user;
 
 import net.bussiness.activities.R;
-import net.bussiness.dao.UserDao;
+import net.bussiness.dto.UserDto;
 import net.bussiness.module.base.NavActivity;
 import net.bussiness.tools.ConstServer;
 import net.bussiness.tools.IApplication;
@@ -27,7 +27,7 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		UserDao currentUser = getUserfromSharedPreference();
+		UserDto currentUser = getUserfromSharedPreference();
 		if (currentUser != null) {
 			IApplication iApplication = (IApplication) getApplication();
 			iApplication.setCurrentUser(currentUser);
@@ -63,13 +63,13 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 			String userId = userIdEt.getText().toString().trim();
 			String pwd = userPwdEt.getText().toString().trim();
 			if (StringUtils.isBlank(userId) || StringUtils.isBlank(pwd)) {
-				AbToastUtil.showToast(LoginActivity.this, "Ô±¹¤±àºÅ»òÃÜÂë²»ÄÜÎª¿Õ£¡");
+				AbToastUtil.showToast(LoginActivity.this, "å‘˜å·¥ç¼–å·æˆ–å¯†ç ä¸èƒ½ä¸ºç©ºï¼");
 				return;
 			}
 			try {
 				Integer.parseInt(userId);
 			} catch (Exception e) {
-				AbToastUtil.showToast(LoginActivity.this, "ÇëÊäÈëÕıÈ·µÄÔ±¹¤±àºÅ£¡");
+				AbToastUtil.showToast(LoginActivity.this, "è¯·è¾“å…¥æ­£ç¡®çš„å‘˜å·¥ç¼–å·ï¼");
 				return;
 			}
 			login(userId, pwd, true);
@@ -90,11 +90,11 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 			public void onSuccess(String content) {
 				super.onSuccess(content);
 				if (isFirst) {
-					UserDao currentUser = (UserDao) JacksonUtils.json2Bean(
-							content, UserDao.class);
+					UserDto currentUser = (UserDto) JacksonUtils.json2Bean(
+							content, UserDto.class);
 					if (currentUser == null) {
 						AbToastUtil
-								.showToast(LoginActivity.this, "Ô±¹¤±àºÅºÍÃÜÂë²»Æ¥Åä£¡");
+								.showToast(LoginActivity.this, "å‘˜å·¥ç¼–å·å’Œå¯†ç ä¸åŒ¹é…ï¼");
 					} else {
 						IApplication iApplication = (IApplication) getApplication();
 						iApplication.setCurrentUser(currentUser);
@@ -115,11 +115,11 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 		});
 	}
 
-	private UserDao getUserfromSharedPreference() {
-		UserDao currentUser = null;
+	private UserDto getUserfromSharedPreference() {
+		UserDto currentUser = null;
 		int userId = AbSharedUtil.getInt(LoginActivity.this, "userId");
 		if (userId != 0) {
-			currentUser = new UserDao();
+			currentUser = new UserDto();
 			currentUser.setUserId(userId);
 			currentUser.setPassword(AbSharedUtil.getString(LoginActivity.this,
 					"pwd"));
@@ -127,7 +127,7 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 		return currentUser;
 	}
 
-	private void save2SharedPreference(UserDao currentUser) {
+	private void save2SharedPreference(UserDto currentUser) {
 		AbSharedUtil.putInt(LoginActivity.this, "userId",
 				currentUser.getUserId());
 		AbSharedUtil.putString(LoginActivity.this, "pwd",

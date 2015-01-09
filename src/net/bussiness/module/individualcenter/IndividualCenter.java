@@ -19,9 +19,6 @@ public class IndividualCenter extends BaseListViewLoad {
 		mListView.setAdapter(mAdapter);
 	}
 
-	/**
-	 * ÏÂÔØÊı¾İ
-	 */
 	public void refreshTask() {
 	}
 

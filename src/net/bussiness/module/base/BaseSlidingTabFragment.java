@@ -23,16 +23,16 @@ public abstract class BaseSlidingTabFragment extends Fragment {
 		AbSlidingTabView mAbSlidingTabView = (AbSlidingTabView) view
 				.findViewById(R.id.mAbSlidingTabView);
 
-		// Èç¹ûÀïÃæµÄÒ³ÃæÁĞ±í²»ÄÜÏÂÔØÔ­Òò£º
-		// FragmentÀïÃæÓÃµÄAbTaskQueue,ÓÉÓÚÓĞ¶à¸ötab£¬Ë³ĞòÏÂÔØÓĞÑÓ³Ù£¬»¹Ã»ÏÂÔØºÃ¾Í±»»º´æÁË¡£¸Ä³ÉÓÃAbTaskPool£¬¾ÍokÁË¡£
-		// »òÕßsetOffscreenPageLimit(0)
+		// å¦‚æœé‡Œé¢çš„é¡µé¢åˆ—è¡¨ä¸èƒ½ä¸‹è½½åŸå› ï¼š
+		// Fragmenté‡Œé¢ç”¨çš„AbTaskQueue,ç”±äºæœ‰å¤šä¸ªtabï¼Œé¡ºåºä¸‹è½½æœ‰å»¶è¿Ÿï¼Œè¿˜æ²¡ä¸‹è½½å¥½å°±è¢«ç¼“å­˜äº†ã€‚æ”¹æˆç”¨AbTaskPoolï¼Œå°±okäº†ã€‚
+		// æˆ–è€…setOffscreenPageLimit(0)
 
-		// »º´æÊıÁ¿
+		// ç¼“å­˜æ•°é‡
 		mAbSlidingTabView.getViewPager().setOffscreenPageLimit(5);
 		mFragments = new ArrayList<Fragment>();
 		tabTexts = new ArrayList<String>();
 		initSlidingTab();
-		// ÉèÖÃÑùÊ½
+		// è®¾ç½®æ ·å¼
 		mAbSlidingTabView.setTabTextColor(Color.BLACK);
 		mAbSlidingTabView.setTabSelectColor(Color.rgb(30, 168, 131));
 		mAbSlidingTabView.setTabBackgroundResource(R.drawable.tab_bg);
@@ -44,9 +44,9 @@ public abstract class BaseSlidingTabFragment extends Fragment {
 
 	/**
 	 * <pre>
-	 * Purpose:mFragments¡¢tabTextsÖĞÌí¼ÓÊı¾İ
+	 * Purpose:mFragmentsã€tabTextsä¸­æ·»åŠ æ•°æ®
 	 * @author Myp
-	 * Create Time: 2014-10-27 ÏÂÎç2:17:13
+	 * Create Time: 2014-10-27 ä¸‹åˆ2:17:13
 	 * Version: 1.0
 	 * </pre>
 	 */

@@ -6,18 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import net.bussiness.activities.R;
-import net.bussiness.dao.YwsqDao;
 import net.bussiness.dialog.lib.Effectstype;
 import net.bussiness.dialog.lib.NiftyDialogBuilder;
 import net.bussiness.module.base.NavMenuFragment.SLMenuOnItemClickListener;
 import net.bussiness.module.individualcenter.IndividualCenter;
 import net.bussiness.module.ywsq.YwsqSlidingTabFragment;
-import net.bussiness.tools.ConstServer;
-import net.bussiness.tools.JacksonUtils;
-import net.bussiness.tools.NetworkWeb;
+import net.bussiness.receiver.PushMessageReceiver;
+import net.bussiness.tools.BDPushUtils;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.Notification;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -32,16 +32,19 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ab.http.AbHttpListener;
 import com.ab.util.AbToastUtil;
 import com.ab.view.slidingmenu.SlidingMenu;
 import com.ab.view.slidingmenu.SlidingMenu.CanvasTransformer;
 import com.ab.view.slidingmenu.SlidingMenu.OnOpenedListener;
 import com.ab.view.titlebar.AbTitleBar;
+import com.baidu.android.pushservice.CustomPushNotificationBuilder;
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 
 @SuppressLint("UseSparseArrays")
 public class NavActivity extends FragmentActivity implements
 		SLMenuOnItemClickListener, OnOpenedListener {
+	private static boolean isFristOpen = true;
 	private int nowIndex = 0;
 	private SlidingMenu menu;
 	private AbTitleBar mAbTitleBar;
@@ -59,12 +62,14 @@ public class NavActivity extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Ê¹ÓÃÏµÍ³±êÌâÀ¸Î»ÖÃ£¬ÎªÁË·ÅÈë×Ô¶¨ÒåµÄ±êÌâÀ¸
+		if (isFristOpen) {
+			loadBdPushConfig();
+			isFristOpen = false;
+		}
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.sliding_menu_content);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 				R.layout.title_bar);
-		// ×Ô¶¨ÒåµÄ±êÌâÀ¸
 		mAbTitleBar = new AbTitleBar(this);
 		mAbTitleBar.setTitleText(R.string.individual_center_title);
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
@@ -74,7 +79,6 @@ public class NavActivity extends FragmentActivity implements
 		mAbTitleBar.getLogoView().setBackgroundResource(
 				R.drawable.button_selector_menu);
 
-		// ¼Óµ½ÏµÍ³±êÌâÀ¸Î»ÖÃÉÏ
 		LinearLayout titleBarLinearLayout = (LinearLayout) this
 				.findViewById(R.id.titleBar);
 		LinearLayout.LayoutParams layoutParamsFF = new LinearLayout.LayoutParams(
@@ -87,31 +91,28 @@ public class NavActivity extends FragmentActivity implements
 			}
 		});
 
-		// Ö÷ÊÓÍ¼µÄFragmentÌí¼Ó
+		// æ·»åŠ Fragment
 		getFragmentManager().beginTransaction()
 				.replace(R.id.content_frame, new IndividualCenter()).commit();
 
-		// SlidingMenuµÄÅäÖÃ
+		// SlidingMenu
 		menu = new SlidingMenu(this);
 		menu.setMode(SlidingMenu.LEFT);
-		// slidingmenuµÄÊÂ¼şÄ£Ê½£¬Èç¹ûÀïÃæÓĞ¿ÉÒÔ»¬¶¯µÄÇëÓÃTOUCHMODE_MARGIN
-		// ¿É½â¾öÊÂ¼ş³åÍ»ÎÊÌâ
+		// slidingmenuè®¾ç½®ä¸ºTOUCHMODE_MARGIN
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		menu.setShadowWidthRes(R.dimen.shadow_width);
 		menu.setShadowDrawable(R.drawable.shadow);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		menu.setFadeDegree(0.35f);
 		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		// menuÊÓÍ¼µÄFragmentÌí¼Ó
+		// menuæ·»åŠ åˆ°Fragmentå½“ä¸­
 		menu.setMenu(R.layout.sliding_menu_menu);
 		menu.setOnOpenedListener(this);
 		getFragmentManager().beginTransaction()
 				.replace(R.id.menu_frame, new NavMenuFragment()).commit();
-		// ¶¯»­ÅäÖÃ
 		menu.setBehindCanvasTransformer(new CanvasTransformer() {
 			@Override
 			public void transformCanvas(Canvas canvas, float percentOpen) {
-				// ½«»­²¼Ä¬ÈÏµÄºÚ±³¾°Ìæ»»µô
 				canvas.drawColor(NavActivity.this.getResources().getColor(
 						R.color.gray_white));
 				canvas.translate(
@@ -134,6 +135,43 @@ public class NavActivity extends FragmentActivity implements
 		index2Fragment.put(0, new IndividualCenter());
 	}
 
+	private void loadBdPushConfig() {
+		PushMessageReceiver.mActivity = NavActivity.this;
+		// Push: ä»¥apikeyçš„æ–¹å¼ç™»å½•ï¼Œä¸€èˆ¬æ”¾åœ¨ä¸»Activityçš„onCreateä¸­ã€‚
+		// è¿™é‡ŒæŠŠapikeyå­˜æ”¾äºmanifestæ–‡ä»¶ä¸­ï¼Œåªæ˜¯ä¸€ç§å­˜æ”¾æ–¹å¼ï¼Œ
+		// æ‚¨å¯ä»¥ç”¨è‡ªå®šä¹‰å¸¸é‡ç­‰å…¶å®ƒæ–¹å¼å®ç°ï¼Œæ¥æ›¿æ¢å‚æ•°ä¸­çš„Utils.getMetaValue(PushDemoActivity.this,
+		// "api_key")
+		/*
+		 * ï¼ï¼ è¯·å°†AndroidManifest.xml 104è¡Œå¤„ api_key å­—æ®µå€¼ä¿®æ”¹ä¸ºè‡ªå·±çš„ api_key æ–¹å¯ä½¿ç”¨ ï¼ï¼ ï¼ï¼
+		 * ATTENTIONï¼šYou need to modify the value of api_key to your own at row
+		 * 104 in AndroidManifest.xml to use this Demo !!
+		 */
+		PushManager.startWork(getApplicationContext(),
+				PushConstants.LOGIN_TYPE_API_KEY,
+				BDPushUtils.getMetaValue(NavActivity.this, "api_key"));
+		// Push: å¦‚æœæƒ³åŸºäºåœ°ç†ä½ç½®æ¨é€ï¼Œå¯ä»¥æ‰“å¼€æ”¯æŒåœ°ç†ä½ç½®çš„æ¨é€çš„å¼€å…³
+		// PushManager.enableLbs(getApplicationContext());
+
+		Resources resource = this.getResources();
+		String pkgName = this.getPackageName();
+		// Push: è®¾ç½®è‡ªå®šä¹‰çš„é€šçŸ¥æ ·å¼ï¼Œå…·ä½“APIä»‹ç»è§ç”¨æˆ·æ‰‹å†Œï¼Œå¦‚æœæƒ³ä½¿ç”¨ç³»ç»Ÿé»˜è®¤çš„å¯ä»¥ä¸åŠ è¿™æ®µä»£ç 
+		// è¯·åœ¨é€šçŸ¥æ¨é€ç•Œé¢ä¸­ï¼Œé«˜çº§è®¾ç½®->é€šçŸ¥æ æ ·å¼->è‡ªå®šä¹‰æ ·å¼ï¼Œé€‰ä¸­å¹¶ä¸”å¡«å†™å€¼ï¼š1ï¼Œ
+		// ä¸ä¸‹æ–¹ä»£ç ä¸­ PushManager.setNotificationBuilder(this, 1, cBuilder)ä¸­çš„ç¬¬äºŒä¸ªå‚æ•°å¯¹åº”
+		CustomPushNotificationBuilder cBuilder = new CustomPushNotificationBuilder(
+				getApplicationContext(), resource.getIdentifier(
+						"notification_custom_builder", "layout", pkgName),
+				resource.getIdentifier("notification_icon", "id", pkgName),
+				resource.getIdentifier("notification_title", "id", pkgName),
+				resource.getIdentifier("notification_text", "id", pkgName));
+		cBuilder.setNotificationFlags(Notification.FLAG_AUTO_CANCEL);
+		cBuilder.setNotificationDefaults(Notification.DEFAULT_SOUND
+				| Notification.DEFAULT_VIBRATE);
+		cBuilder.setStatusbarIcon(this.getApplicationInfo().icon);
+		cBuilder.setLayoutDrawable(resource.getIdentifier(
+				"simple_notification_icon", "drawable", pkgName));
+		PushManager.setNotificationBuilder(this, 1, cBuilder);
+	}
+
 	@Override
 	public void onBackPressed() {
 		if (menu.isMenuShowing()) {
@@ -146,13 +184,13 @@ public class NavActivity extends FragmentActivity implements
 	private void exitApp() {
 		final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder
 				.getInstance(this);
-		dialogBuilder.withTitle("ÍË³öÏµÍ³")
+		dialogBuilder.withTitle("é€€å‡ºç³»ç»Ÿ")
 				// .withTitle(null) no title
 				.withTitleColor("#FFFFFF")
 				// def
 				.withDividerColor("#11000000")
 				// def
-				.withMessage("È·¶¨ÍË³ö³ö²î¹ÜÀíÏµÍ³?")
+				.withMessage("ç¡®å®šé€€å‡ºå‡ºå·®ç®¡ç†ç³»ç»Ÿ?")
 				// .withMessage(null) no Msg
 				.withMessageColor("#FFFFFFFF")
 				// def | withMessageColor(int resid)
@@ -161,8 +199,8 @@ public class NavActivity extends FragmentActivity implements
 				.withIcon(getResources().getDrawable(R.drawable.ic_launcher))
 				.withDuration(300) // def
 				.withEffect(Effectstype.Newspager) // def Effectstype.Slidetop
-				.withButton1Text("È·¶¨") // def gone
-				.withButton2Text("È¡Ïû") // def gone
+				.withButton1Text("ç¡®å®š") // def gone
+				.withButton2Text("å–æ¶ˆ") // def gone
 				.isCancelableOnTouchOutside(false) // def | isCancelable(true)
 				.setButton1Click(new View.OnClickListener() {
 					@Override
@@ -193,7 +231,7 @@ public class NavActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * ×ó²à²Ëµ¥µã»÷ÇĞ»»Ê×Ò³µÄÄÚÈİ
+	 * åˆ‡æ¢ä¸»å±å¹•çš„å†…å®¹
 	 */
 	public void switchContent(int position, String title) {
 		FragmentTransaction transaction = getFragmentManager()
