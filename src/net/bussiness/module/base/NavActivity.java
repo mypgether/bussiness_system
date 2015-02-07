@@ -8,48 +8,68 @@ import java.util.Map;
 import net.bussiness.activities.R;
 import net.bussiness.dialog.lib.Effectstype;
 import net.bussiness.dialog.lib.NiftyDialogBuilder;
+import net.bussiness.dto.ChatUserDto;
+import net.bussiness.dto.ChatmsgDto;
+import net.bussiness.dto.GroupmsgDto;
+import net.bussiness.dto.NavMenuItemDto;
+import net.bussiness.global.ConstServer;
+import net.bussiness.global.Constants;
+import net.bussiness.global.IApplication;
+import net.bussiness.interfaces.OnPushMessageListener;
 import net.bussiness.module.base.NavMenuFragment.SLMenuOnItemClickListener;
-import net.bussiness.module.individualcenter.IndividualCenter;
-import net.bussiness.module.ywsq.YwsqSlidingTabFragment;
+import net.bussiness.module.im.ChatGroupDetailFragment;
+import net.bussiness.module.im.ChatGroupInfoActivity;
+import net.bussiness.module.im.ChatUserFragment;
+import net.bussiness.module.user.EditProfileActivity;
+import net.bussiness.module.user.IndividualCenterFragment;
+import net.bussiness.module.user.LoginActivity;
+import net.bussiness.module.yw.YwsqAddActivity;
+import net.bussiness.module.yw.YwsqSlidingTabFragment;
+import net.bussiness.module.ywnr.YwnrFragment;
 import net.bussiness.receiver.PushMessageReceiver;
 import net.bussiness.tools.BDPushUtils;
+import net.bussiness.tools.JacksonUtils;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.Notification;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ab.db.storage.AbSqliteStorageListener.AbDataSelectListener;
+import com.ab.db.storage.AbStorageQuery;
 import com.ab.util.AbToastUtil;
 import com.ab.view.slidingmenu.SlidingMenu;
 import com.ab.view.slidingmenu.SlidingMenu.CanvasTransformer;
 import com.ab.view.slidingmenu.SlidingMenu.OnOpenedListener;
 import com.ab.view.titlebar.AbTitleBar;
-import com.baidu.android.pushservice.CustomPushNotificationBuilder;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 
 @SuppressLint("UseSparseArrays")
 public class NavActivity extends FragmentActivity implements
-		SLMenuOnItemClickListener, OnOpenedListener {
+		SLMenuOnItemClickListener, OnOpenedListener, OnPushMessageListener {
 	private static boolean isFristOpen = true;
 	private int nowIndex = 0;
 	private SlidingMenu menu;
-	private AbTitleBar mAbTitleBar;
+	public AbTitleBar mAbTitleBar;
 	private List<Fragment> list;
 	private Map<Integer, Fragment> index2Fragment;
+	private IApplication iApp = null;
 
 	private static Interpolator interp = new Interpolator() {
 		@Override
@@ -78,7 +98,6 @@ public class NavActivity extends FragmentActivity implements
 		mAbTitleBar.setLogoLine(R.drawable.line);
 		mAbTitleBar.getLogoView().setBackgroundResource(
 				R.drawable.button_selector_menu);
-
 		LinearLayout titleBarLinearLayout = (LinearLayout) this
 				.findViewById(R.id.titleBar);
 		LinearLayout.LayoutParams layoutParamsFF = new LinearLayout.LayoutParams(
@@ -93,7 +112,8 @@ public class NavActivity extends FragmentActivity implements
 
 		// 添加Fragment
 		getFragmentManager().beginTransaction()
-				.replace(R.id.content_frame, new IndividualCenter()).commit();
+				.replace(R.id.content_frame, new IndividualCenterFragment())
+				.commit();
 
 		// SlidingMenu
 		menu = new SlidingMenu(this);
@@ -124,52 +144,24 @@ public class NavActivity extends FragmentActivity implements
 
 		// init data
 		list = new ArrayList<Fragment>();
-		list.add(new IndividualCenter());
-		list.add(new IndividualCenter());
+		iApp = (IApplication) this.getApplication();
+		list.add(new IndividualCenterFragment());
+		list.add(new ChatUserFragment());
+		list.add(new ChatGroupDetailFragment());
 		list.add(new YwsqSlidingTabFragment());
-		list.add(new IndividualCenter());
-		list.add(new IndividualCenter());
-		list.add(new IndividualCenter());
-
+		list.add(new YwnrFragment());
 		index2Fragment = new HashMap<Integer, Fragment>();
-		index2Fragment.put(0, new IndividualCenter());
+		index2Fragment.put(0, new IndividualCenterFragment());
+		setCustomRightAbTitleBar(0);
 	}
 
 	private void loadBdPushConfig() {
 		PushMessageReceiver.mActivity = NavActivity.this;
-		// Push: 以apikey的方式登录，一般放在主Activity的onCreate中。
-		// 这里把apikey存放于manifest文件中，只是一种存放方式，
-		// 您可以用自定义常量等其它方式实现，来替换参数中的Utils.getMetaValue(PushDemoActivity.this,
-		// "api_key")
-		/*
-		 * ！！ 请将AndroidManifest.xml 104行处 api_key 字段值修改为自己的 api_key 方可使用 ！！ ！！
-		 * ATTENTION：You need to modify the value of api_key to your own at row
-		 * 104 in AndroidManifest.xml to use this Demo !!
-		 */
 		PushManager.startWork(getApplicationContext(),
 				PushConstants.LOGIN_TYPE_API_KEY,
 				BDPushUtils.getMetaValue(NavActivity.this, "api_key"));
 		// Push: 如果想基于地理位置推送，可以打开支持地理位置的推送的开关
 		// PushManager.enableLbs(getApplicationContext());
-
-		Resources resource = this.getResources();
-		String pkgName = this.getPackageName();
-		// Push: 设置自定义的通知样式，具体API介绍见用户手册，如果想使用系统默认的可以不加这段代码
-		// 请在通知推送界面中，高级设置->通知栏样式->自定义样式，选中并且填写值：1，
-		// 与下方代码中 PushManager.setNotificationBuilder(this, 1, cBuilder)中的第二个参数对应
-		CustomPushNotificationBuilder cBuilder = new CustomPushNotificationBuilder(
-				getApplicationContext(), resource.getIdentifier(
-						"notification_custom_builder", "layout", pkgName),
-				resource.getIdentifier("notification_icon", "id", pkgName),
-				resource.getIdentifier("notification_title", "id", pkgName),
-				resource.getIdentifier("notification_text", "id", pkgName));
-		cBuilder.setNotificationFlags(Notification.FLAG_AUTO_CANCEL);
-		cBuilder.setNotificationDefaults(Notification.DEFAULT_SOUND
-				| Notification.DEFAULT_VIBRATE);
-		cBuilder.setStatusbarIcon(this.getApplicationInfo().icon);
-		cBuilder.setLayoutDrawable(resource.getIdentifier(
-				"simple_notification_icon", "drawable", pkgName));
-		PushManager.setNotificationBuilder(this, 1, cBuilder);
 	}
 
 	@Override
@@ -179,6 +171,35 @@ public class NavActivity extends FragmentActivity implements
 		} else {
 			exitApp();
 		}
+	}
+
+	private void switchAccount() {
+		final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder
+				.getInstance(this);
+		dialogBuilder.withTitle("切换账号").withTitleColor("#FFFFFF")
+				.withDividerColor("#11000000").withMessage("确定切换账号?")
+				.withMessageColor("#FFFFFFFF").withDialogColor("#FFE74C3C")
+				.withIcon(getResources().getDrawable(R.drawable.ic_launcher))
+				.withDuration(100) // def
+				.withEffect(Effectstype.Slidetop) // def Effectstype.Slidetop
+				.withButton1Text("确定") // def gone
+				.withButton2Text("取消") // def gone
+				.isCancelableOnTouchOutside(false) // def | isCancelable(true)
+				.setButton1Click(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						iApp.switchAccount();
+						startActivity(new Intent(NavActivity.this,
+								LoginActivity.class));
+						dialogBuilder.dismiss();
+						finish();
+					}
+				}).setButton2Click(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialogBuilder.dismiss();
+					}
+				}).show();
 	}
 
 	private void exitApp() {
@@ -201,11 +222,11 @@ public class NavActivity extends FragmentActivity implements
 				.withEffect(Effectstype.Newspager) // def Effectstype.Slidetop
 				.withButton1Text("确定") // def gone
 				.withButton2Text("取消") // def gone
-				.isCancelableOnTouchOutside(false) // def | isCancelable(true)
+				.isCancelableOnTouchOutside(true) // def | isCancelable(true)
 				.setButton1Click(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						finish();
+						System.exit(0);
 					}
 				}).setButton2Click(new View.OnClickListener() {
 					@Override
@@ -216,15 +237,12 @@ public class NavActivity extends FragmentActivity implements
 	}
 
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		System.exit(0);
-	}
-
-	@Override
 	public void selectItem(int position, String title) {
 		if (nowIndex == position) {
 			menu.toggle();
+			refreshNavMenu(position, 2);
+		} else if (position == 5) {
+			switchAccount();
 		} else {
 			switchContent(position, title);
 		}
@@ -245,13 +263,72 @@ public class NavActivity extends FragmentActivity implements
 			transaction.add(R.id.content_frame, list.get(nowIndex));
 		}
 		mAbTitleBar.setTitleText(title);
+		setCustomRightAbTitleBar(position);
 		transaction.commit();
-		menu.toggle();
+		refreshNavMenu(position, 2);
+		if (menu.isMenuShowing())
+			menu.toggle();
+	}
+
+	/**
+	 * <pre>
+	 * Purpose:针对不同模块个性化标题栏右边按钮
+	 * @author Myp
+	 * Create Time: 2015-1-10 下午2:49:44
+	 * @param position
+	 * Version: 1.0
+	 * </pre>
+	 */
+	private void setCustomRightAbTitleBar(final int position) {
+		/*
+		 * 业务申请和业务签到模块中，右侧栏右边添加个性化
+		 */
+		mAbTitleBar.clearRightView();
+		if (position == 0) {
+			View rightViewMore = LayoutInflater.from(this).inflate(
+					R.layout.edit_btn, null);
+			mAbTitleBar.addRightView(rightViewMore);
+			Button editBtn = (Button) rightViewMore.findViewById(R.id.editBtn);
+			editBtn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startActivity(new Intent(NavActivity.this,
+							EditProfileActivity.class));
+				}
+			});
+		} else if (position == 2) {
+			View rightViewMore = LayoutInflater.from(this).inflate(
+					R.layout.more_btn, null);
+			mAbTitleBar.addRightView(rightViewMore);
+			Button moreBtn = (Button) rightViewMore.findViewById(R.id.moreBtn);
+			moreBtn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(NavActivity.this,
+							ChatGroupInfoActivity.class);
+					intent.putExtra("mDept", iApp.mUser.getDept());
+					startActivityForResult(intent,
+							ChatGroupDetailFragment.CLEAR_IGROUPCHATMSG);
+				}
+			});
+		} else if (position == 3 && iApp.mUserIdentity == 2) {
+			View rightViewMore = LayoutInflater.from(this).inflate(
+					R.layout.add_btn, null);
+			mAbTitleBar.addRightView(rightViewMore);
+			Button addBtn = (Button) rightViewMore.findViewById(R.id.addBtn);
+			addBtn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startActivity(new Intent(NavActivity.this,
+							YwsqAddActivity.class));
+				}
+			});
+		}
 	}
 
 	@Override
 	public void selectLogo() {
-		AbToastUtil.showToast(NavActivity.this, "LogoClick");
+		startActivity(new Intent(NavActivity.this, EditProfileActivity.class));
 	}
 
 	@Override
@@ -259,9 +336,15 @@ public class NavActivity extends FragmentActivity implements
 		View view = getFragmentManager().findFragmentById(R.id.menu_frame)
 				.getView();
 		// shake logo
-		// view.findViewById(R.id.menu_user_logo).startAnimation(
-		// AnimationUtils.loadAnimation(NavActivity.this, R.anim.shake));
-
+		view.findViewById(R.id.menu_user_logo).startAnimation(
+				AnimationUtils.loadAnimation(NavActivity.this, R.anim.shake));
+		String logoPath = iApp.mUser.getPhotoPath();
+		if (null != logoPath) {
+			iApp.mAbImageLoader.display((ImageView) view
+					.findViewById(R.id.menu_user_logo), ConstServer
+					.USER_DOWNLOADLOGO(iApp.mUser.getUserId(),
+							iApp.mUser.getPhotoPath()));
+		}
 		// shake counter
 		ListView lv = (ListView) view.findViewById(R.id.menu_lv);
 		for (int i = 0; i < lv.getChildCount(); i++) {
@@ -270,6 +353,144 @@ public class NavActivity extends FragmentActivity implements
 			if (!"".equals(cntTv.getText())) {
 				cntTv.startAnimation(AnimationUtils.loadAnimation(
 						NavActivity.this, R.anim.shake));
+			}
+		}
+	}
+
+	/**
+	 * <pre>
+	 * Purpose:刷新菜单栏
+	 * @author Myp
+	 * Create Time: 2015-1-15 下午10:18:45
+	 * @param index 刷新的位置
+	 * @param refreshType 刷新模式，1为增加，2为清空
+	 * </pre>
+	 */
+	private void refreshNavMenu(int index, int refreshType) {
+		NavMenuFragment menuFragment = (NavMenuFragment) getFragmentManager()
+				.findFragmentById(R.id.menu_frame);
+		try {
+			NavMenuItemDto temp = menuFragment.getmNavDrawerItems().get(index);
+			if (refreshType == 1) {
+				temp.setCounterVisibility(true);
+				temp.setCount(temp.getCount() + 1);
+			} else if (refreshType == 2) {
+				temp.setCounterVisibility(false);
+				temp.setCount(0);
+			}
+			menuFragment.getmAdapter().notifyDataSetChanged();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onReceiveIMMessage(String content, int msgType,
+			int notificationId) {
+		if (msgType == 1) {
+			refreshNavMenu(1, 1);
+			ChatmsgDto msg = (ChatmsgDto) JacksonUtils.json2Bean(content,
+					ChatmsgDto.class);
+			saveIMMessage(msg);
+			sendIMPersonBoardcast(msg, notificationId);
+		} else if (msgType == 0) {
+			if (nowIndex != 2)
+				refreshNavMenu(2, 1);
+			if (index2Fragment.containsKey(2)) {
+				ChatGroupDetailFragment fragment = (ChatGroupDetailFragment) index2Fragment
+						.get(2);
+				GroupmsgDto msg = (GroupmsgDto) JacksonUtils.json2Bean(content,
+						GroupmsgDto.class);
+				fragment.onReceiveGroupMessage(msg, notificationId);
+			}
+		}
+	}
+
+	@Override
+	public void onReceiveYWSQMessage(String content, int notificationId) {
+		refreshNavMenu(3, 1);
+	}
+
+	@Override
+	public void onReceiveYWSPMessage(String content, int notificationId) {
+		refreshNavMenu(3, 1);
+	}
+
+	@Override
+	public void onReceiveYWPJMessage(String content, int notificationId) {
+		refreshNavMenu(4, 1);
+	}
+
+	@Override
+	public void onReceiveYWNRMessage(String content, int notificationId) {
+		refreshNavMenu(4, 1);
+	}
+
+	private boolean isChatUserExist = false;
+	private int idColumn = 0;
+
+	private void saveIMMessage(ChatmsgDto msg) {
+		// 组装ChatUserDto
+		final ChatUserDto mChatUserDto = new ChatUserDto();
+		mChatUserDto.setSenderId(msg.getUserBySenderId().getUserId());
+		mChatUserDto.setSenderName(msg.getUserBySenderId().getUserName());
+		mChatUserDto.setSenderLogoPath(msg.getUserBySenderId().getPhotoPath());
+		mChatUserDto.setLastChatTime(msg.getMsgTime().toLocaleString());
+		if (msg.getMsgType() == 1) {
+			mChatUserDto.setLastChatContent(new String(msg.getMsgContent()));
+		} else if (msg.getMsgType() == 2) {
+			mChatUserDto.setLastChatContent("[图片]");
+		} else {
+			mChatUserDto.setLastChatContent("[语音]");
+		}
+		isChatUserExist = false;
+		// 查询数据
+		AbStorageQuery mAbStorageQuery = new AbStorageQuery();
+		mAbStorageQuery.equals("senderId", msg.getUserBySenderId().getUserId());
+		iApp.mAbSqliteStorage.findData(mAbStorageQuery, iApp.mUserDao,
+				new AbDataSelectListener() {
+					@Override
+					public void onSuccess(List<?> paramList) {
+						if (paramList.size() != 0) {
+							isChatUserExist = true;
+							idColumn = ((ChatUserDto) paramList.get(0)).getId();
+						}
+						if (!isChatUserExist) {
+							iApp.mAbSqliteStorage.insertData(mChatUserDto,
+									iApp.mUserDao, null);
+						} else {
+							mChatUserDto.setId(idColumn);
+							iApp.mAbSqliteStorage.updateData(mChatUserDto,
+									iApp.mUserDao, null);
+						}
+					}
+
+					@Override
+					public void onFailure(int errorCode, String errorMessage) {
+						AbToastUtil.showToast(NavActivity.this, errorMessage);
+						iApp.mAbSqliteStorage.insertData(mChatUserDto,
+								iApp.mUserDao, null);
+					}
+				});
+	}
+
+	private void sendIMPersonBoardcast(ChatmsgDto msg, int notificationId) {
+		Intent intent = new Intent(Constants.IM_PERSON_MESSAGE_ACTION);
+		intent.putExtra("MESSAGE", msg);
+		intent.putExtra("notificationId", notificationId);
+		sendBroadcast(intent);
+	}
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		super.onActivityResult(arg0, arg1, arg2);
+		if (nowIndex == 2) {
+			try {
+				ChatGroupDetailFragment fragment = (ChatGroupDetailFragment) getFragmentManager()
+						.findFragmentById(R.id.content_frame);
+				fragment.onActivityResult(arg0, arg1, arg2);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}

@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:background="@color/gray_white"
     android:orientation="vertical" >
-    
+
     <!--
           这里放置listview,gridview或者scrollview的布局 ,PullToRefreshView
 	要设置android:orientation="vertical"属性
@@ -18,14 +18,11 @@
         android:layout_height="fill_parent"
         android:cacheColorHint="#00000000" >
 
-        <TextView
-            android:id="@+id/mTextView"
+        <LinearLayout
+            android:id="@+id/mLL"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:text="下拉看看吧"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textSize="15sp" />
+            android:orientation="vertical" />
     </ScrollView>
 
 </com.ab.view.pullview.AbPullToRefreshView>

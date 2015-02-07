@@ -13,6 +13,22 @@ import android.view.ViewGroup;
 
 import com.ab.view.sliding.AbSlidingTabView;
 
+/**
+ * <pre>
+ * Project Name:bussiness_system
+ * Package:net.bussiness.module.base
+ * FileName:BaseSlidingTabFragment.java
+ * Purpose:滑动Tab的Fragment
+ * Create Time: 2015-1-16 下午4:37:34
+ * Create Specification:
+ * Modified Time:
+ * Modified by:
+ * Modified Specification:
+ * Version: 1.0
+ * </pre>
+ * 
+ * @author Myp
+ */
 public abstract class BaseSlidingTabFragment extends Fragment {
 	public List<Fragment> mFragments;
 	public List<String> tabTexts;

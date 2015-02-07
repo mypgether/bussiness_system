@@ -30,8 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/counter_bg"
-        android:textColor="@color/counter_text_color" />
+        android:textColor="@color/counter_text_color"
+        android:textSize="25sp" />
 
 </RelativeLayout>

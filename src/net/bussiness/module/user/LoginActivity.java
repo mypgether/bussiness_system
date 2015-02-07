@@ -2,11 +2,11 @@ package net.bussiness.module.user;
 
 import net.bussiness.activities.R;
 import net.bussiness.dto.UserDto;
+import net.bussiness.global.ConstServer;
+import net.bussiness.global.IApplication;
 import net.bussiness.module.base.NavActivity;
-import net.bussiness.tools.ConstServer;
-import net.bussiness.tools.IApplication;
 import net.bussiness.tools.JacksonUtils;
-import net.bussiness.tools.NetworkWeb;
+import net.bussiness.tools.NetworkUtils;
 import net.bussiness.tools.StringUtils;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,25 +16,33 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.ab.activity.AbActivity;
+import com.ab.fragment.AbDialogFragment.AbDialogOnLoadListener;
+import com.ab.fragment.AbProgressDialogFragment;
+import com.ab.fragment.AbRefreshDialogFragment;
 import com.ab.http.AbHttpListener;
 import com.ab.http.AbRequestParams;
-import com.ab.util.AbSharedUtil;
+import com.ab.util.AbDialogUtil;
 import com.ab.util.AbToastUtil;
 
 public class LoginActivity extends AbActivity implements OnClickListener {
 	private EditText userIdEt;
 	private EditText userPwdEt;
+	private IApplication iApp = null;
+	private AbRefreshDialogFragment mRefreshFragment = null;
+	private AbProgressDialogFragment mProgressFragment = null;
+	private UserDto mUserDto = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		UserDto currentUser = getUserfromSharedPreference();
-		if (currentUser != null) {
-			IApplication iApplication = (IApplication) getApplication();
-			iApplication.setCurrentUser(currentUser);
-			login(currentUser.getUserId() + "", currentUser.getPassword(), true);
-			startActivity(new Intent(LoginActivity.this, NavActivity.class));
-			finish();
-		}
+		iApp = (IApplication) getApplication();
+		mUserDto = iApp.mUser;
+		if (mUserDto != null) {
+			mProgressFragment = AbDialogUtil.showProgressDialog(this, 0,
+					"登录中，请稍后...");
+			mProgressFragment.setCancelable(false);
+			login(mUserDto.getUserId() + "", mUserDto.getPassword(), true);
+		} else
+			mUserDto = new UserDto();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		this.setFinishOnTouchOutside(false);
@@ -44,7 +52,7 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 		findViewById(R.id.clearPwd).setOnClickListener(this);
 		findViewById(R.id.pwdBtn).setOnClickListener(this);
 		findViewById(R.id.loginBtn).setOnClickListener(this);
-		findViewById(R.id.cancelBtn).setOnClickListener(this);
+		findViewById(R.id.registerBtn).setOnClickListener(this);
 	}
 
 	@Override
@@ -69,68 +77,75 @@ public class LoginActivity extends AbActivity implements OnClickListener {
 			try {
 				Integer.parseInt(userId);
 			} catch (Exception e) {
-				AbToastUtil.showToast(LoginActivity.this, "请输入正确的员工编号！");
+				AbToastUtil.showToast(LoginActivity.this, "请输入正确的员工编号格式！");
 				return;
 			}
-			login(userId, pwd, true);
+			mUserDto.setUserId(Integer.parseInt(userId));
+			mUserDto.setPassword(pwd);
+			login(userId, pwd, false);
 			break;
-		case R.id.cancelBtn:
-			System.exit(0);
+		case R.id.registerBtn:
+			startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
 			break;
 		}
 	}
 
-	private void login(String userId, String pwd, final boolean isFirst) {
-		NetworkWeb web = NetworkWeb.newInstance(LoginActivity.this);
+	private void login(String userId, String pwd, final boolean fromSP) {
+		mProgressFragment = AbDialogUtil.showProgressDialog(this, 0,
+				"登录中，请稍后...");
+		mProgressFragment.setCancelable(false);
+		NetworkUtils web = NetworkUtils.newInstance(LoginActivity.this);
 		AbRequestParams params = new AbRequestParams();
 		params.put("userId", userId);
 		params.put("password", pwd);
 		web.post(ConstServer.LOGIN(), params, new AbHttpListener() {
 			@Override
 			public void onSuccess(String content) {
-				super.onSuccess(content);
-				if (isFirst) {
-					UserDto currentUser = (UserDto) JacksonUtils.json2Bean(
-							content, UserDto.class);
-					if (currentUser == null) {
-						AbToastUtil
-								.showToast(LoginActivity.this, "员工编号和密码不匹配！");
-					} else {
-						IApplication iApplication = (IApplication) getApplication();
-						iApplication.setCurrentUser(currentUser);
-						if (((CheckBox) findViewById(R.id.login_check))
-								.isChecked())
-							save2SharedPreference(currentUser);
-						startActivity(new Intent(LoginActivity.this,
-								NavActivity.class));
-						finish();
+				if (mRefreshFragment != null)
+					mRefreshFragment.loadFinish();
+				if (null != mProgressFragment)
+					mProgressFragment.dismiss();
+				UserDto currentUser = (UserDto) JacksonUtils.json2Bean(content,
+						UserDto.class);
+				if (currentUser == null) {
+					AbToastUtil.showToast(LoginActivity.this, "员工编号和密码不匹配！");
+					if (fromSP) {
+						iApp.clearSharedPreference();
+						System.exit(0);
 					}
+				} else {
+					mUserDto = currentUser;
+					iApp.mUserIdentity = (currentUser.getPosition().getId() == 1) ? 1
+							: 2;
+					iApp.mUser = currentUser;
+					if (fromSP
+							|| ((CheckBox) findViewById(R.id.login_check))
+									.isChecked()) {
+						iApp.save2SharedPreference(currentUser,
+								iApp.mUserIdentity);
+					}
+					startActivity(new Intent(LoginActivity.this,
+							NavActivity.class));
+					finish();
 				}
 			}
 
 			@Override
 			public void onFailure(String content) {
 				AbToastUtil.showToast(LoginActivity.this, content);
+				if (null != mProgressFragment)
+					mProgressFragment.dismiss();
+				mRefreshFragment = AbDialogUtil.showRefreshDialog(
+						LoginActivity.this, R.drawable.ic_refresh,
+						"登录失败，请重试...", new AbDialogOnLoadListener() {
+							@Override
+							public void onLoad() {
+								login(mUserDto.getUserId() + "",
+										mUserDto.getPassword(), true);
+							}
+						});
+				mRefreshFragment.setCancelable(false);
 			}
 		});
-	}
-
-	private UserDto getUserfromSharedPreference() {
-		UserDto currentUser = null;
-		int userId = AbSharedUtil.getInt(LoginActivity.this, "userId");
-		if (userId != 0) {
-			currentUser = new UserDto();
-			currentUser.setUserId(userId);
-			currentUser.setPassword(AbSharedUtil.getString(LoginActivity.this,
-					"pwd"));
-		}
-		return currentUser;
-	}
-
-	private void save2SharedPreference(UserDto currentUser) {
-		AbSharedUtil.putInt(LoginActivity.this, "userId",
-				currentUser.getUserId());
-		AbSharedUtil.putString(LoginActivity.this, "pwd",
-				currentUser.getPassword());
 	}
 }

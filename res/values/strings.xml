@@ -66,20 +66,6 @@
     <string name="about">关于</string>
     <string name="version_lable">程序版本：</string>
     <string name="copyright">© 2012 amsoft.cn</string>
-    <string name="about_desc">      \t\tAndroid开发宝
-      \n\t\t又“andBase开发框架”
-      andbase是为Android开发者量身打造的一款开源类库产品，
-                 您可以在amsoft.cn中获取到最新的代码，示例以及开发文档。
-      \n\t\tandbase中包含了大量的开发常用手段，如网络下载，Http请求,线程与线程池的管理，
-	      图片缓存管理，图片文件下载上传，数据库ORM框架，并封装了大量常用工具类入如字符串，日期，文件处理，图片处理等，
-	      能够使您的应用在团队开发中减少冗余代码，很大的提高了代码的维护性与开发高效性，
-	      能很好的规避由于开发疏忽而导致常犯的错误。 
-	  \n\t\t同时andbase也包含一些常用的控件，如侧边栏，下拉刷新，Tab滑动等，
-	      不会使你的程序包变大，却能大幅度缩小您的程序。
-	      而这一切都是免费的。 
-	   \n
-       \n\t\t官方主页：www.amsoft.cn
-       \n\t\t交流QQ群：38535812    </string>
     <string name="date_picker">年月日：</string>
     <string name="time_picker1">月日时分：</string>
     <string name="time_picker2">时分：</string>
@@ -103,8 +89,8 @@
     <string name="user_email">邮箱</string>
     <string name="error_name">请输入用户名！</string>
     <string name="error_name_length1">用户名长度不能少于3个字符</string>
-    <string name="error_name_length2">用户名长度不能超过20个字符</string>
-    <string name="error_name_expr">用户名只能是字母和数字</string>
+    <string name="error_name_length2">用户名长度不能超过9个字符</string>
+    <string name="error_name_expr">用户名只能是数字</string>
     <string name="error_pwd">请输入密码！</string>
     <string name="error_pwd_match">两次密码输入不一致！</string>
     <string name="error_pwd_length1">密码长度不能少于6个字符</string>
@@ -159,18 +145,60 @@
 
     <string name="accept_btn">同意</string>
     <string name="reject_btn">拒绝</string>
+
+    <!-- base基础模块 -->
+    <string name="base_load_nomore">没有最新内容...</string>
+    <string name="base_no_items">没有更多内容...</string>
+    <string name="base_menu_setting">设置</string>
+
     <!-- 用户模块 -->
     <string name="login_title">用户登录</string>
     <string name="findPwd_title">找回密码</string>
     <string name="userId">员工编号</string>
+    <string name="find_pwd_userId">请输入员工编号</string>
     <string name="userName">用户名</string>
     <string name="userPwd">密码</string>
     <string name="rem_pwd">记住密码</string>
     <string name="firm_pwd">确认密码</string>
-    <string name="cancel">取消</string>
+    <string name="modify_pwd">修改 密码</string>
+    <string name="input_pwd">输入原密码</string>
+    <string name="input_newpwd">输入新密码</string>
+    <string name="confirm_newpwd">确认新密码</string>
     <!-- 个人中心 -->
     <string name="individual_center_title">个人中心</string>
-    <!-- 任务申请 -->
-    <string name="rwsq_title">任务申请</string>
+    <string name="user_send_msg">发 送 消 息</string>
+    <!-- 业务申请 -->
+    <string name="ywsq_title">业务申请</string>
+    <string name="ywsq_longclick_agree">通过</string>
+    <string name="ywsq_longclick_reject">拒绝</string>
+    <string name="ywsq_longclick_delete">删除</string>
+    <string name="ywsq_longclick_cancel">取消</string>
+    <string name="ywsq_longclick_detail">详细</string>
+    <string name="ywsq_longclick_chat">聊天</string>
+    <string name="ywsq_longclick_popview_dialog_agree">同意!</string>
+    <string name="ywsq_longclick_popview_dialog_reject">拒绝!</string>
+    <string name="ywsq_add_title">申请业务</string>
+    <string name="ywsq_add_submit">提交申请</string>
+    <string name="ywsq_add_cancel">取消申请</string>
+    <string name="ywsq_add_location">地点:</string>
+    <string name="ywsq_add_location_hint">输入地点</string>
+    <string name="ywsq_add_budget">预算:</string>
+    <string name="ywsq_add_budget_hint">输入预算</string>
+    <string name="ywsq_add_time">时间:</string>
+    <string name="ywsq_add_reason">申请理由:</string>
+    <string name="ywsq_add_reason_hint">请输入申请理由...</string>
+    <string name="ywsq_add_reason_1">出差</string>
+    <string name="ywsq_add_reason_2">访客</string>
+    <string name="ywsq_add_reason_3">客户关怀</string>
+    <string name="ywsq_add_reason_4">其他</string>
+
+    <!-- 业务详细 -->
+    <string name="yw_detail_time">时分:</string>
+    <string name="yw_detail_add_submit">提交详细</string>
+    <string name="yw_detail_add_cancel">取消</string>
+    <string name="yw_detail_add_cost">花费:</string>
+    <string name="yw_detail_add_cost_hint">请输入花费...</string>
+    <string name="yw_detail_add_desc">备注:</string>
+    <string name="yw_detail_add_desc_hint">请输入备注信息...</string>
 
 </resources>

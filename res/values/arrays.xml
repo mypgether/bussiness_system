@@ -26,37 +26,37 @@
     <string-array name="nav_drawer_items_normal">
         <item>个人中心</item>
         <item>我的消息</item>
-        <item>业务申请</item>
-        <item>业务签到</item>
-        <item>系统设置</item>
-        <item>关于我们</item>
+        <item>闲间杂谈</item>
+        <item>我的申请</item>
+        <item>我的签到</item>
+        <item>切换账号</item>
     </string-array>
     <string-array name="nav_drawer_items_leader">
         <item>个人中心</item>
         <item>我的消息</item>
-        <item>员工信息</item>
-        <item>业务审批</item>
+        <item>闲间杂谈</item>
+        <item>我的审批</item>
         <item>业务活动</item>
-        <item>系统设置</item>
+        <item>切换账号</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons_normal">
-        <item>@drawable/ic_home</item>
-        <item>@drawable/ic_people</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_photos</item>
-        <item>@drawable/ic_communities</item>
-        <item>@drawable/ic_whats_hot</item>
+        <item>@drawable/ic_home_home</item>
+        <item>@drawable/ic_home_people</item>
+        <item>@drawable/ic_home_pages</item>
+        <item>@drawable/ic_home_photos</item>
+        <item>@drawable/ic_home_whats_hot</item>
+        <item>@drawable/ic_home_quit</item>
     </array>
     <array name="nav_drawer_icons_leader">
-        <item>@drawable/ic_home</item>
-        <item>@drawable/ic_people</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_communities</item>
-        <item>@drawable/ic_photos</item>
-        <item>@drawable/ic_whats_hot</item>
+        <item>@drawable/ic_home_home</item>
+        <item>@drawable/ic_home_people</item>
+        <item>@drawable/ic_home_pages</item>
+        <item>@drawable/ic_home_photos</item>
+        <item>@drawable/ic_home_whats_hot</item>
+        <item>@drawable/ic_home_quit</item>
     </array>
 
 </resources>

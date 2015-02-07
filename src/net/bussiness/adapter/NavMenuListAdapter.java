@@ -41,11 +41,9 @@ public class NavMenuListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if (convertView == null) {
-			LayoutInflater mInflater = (LayoutInflater) context
-					.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-			convertView = mInflater.inflate(R.layout.menu_lv_row, null);
-		}
+		LayoutInflater mInflater = (LayoutInflater) context
+				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		convertView = mInflater.inflate(R.layout.menu_lv_row, null);
 		ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
 		TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
 		TextView txtCount = (TextView) convertView.findViewById(R.id.counter);
@@ -56,7 +54,7 @@ public class NavMenuListAdapter extends BaseAdapter {
 		// displaying count
 		// check whether it set visible or not
 		if (navDrawerItems.get(position).getCounterVisibility()) {
-			txtCount.setText(navDrawerItems.get(position).getCount());
+			txtCount.setText(navDrawerItems.get(position).getCount() + "");
 		} else {
 			txtCount.setVisibility(View.GONE);
 		}
