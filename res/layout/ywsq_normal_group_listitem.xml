@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/button_selector_gray"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/ywsq_group_noitems"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/base_no_items"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ywsq_group_items"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/ywsq_group_tv1"
+                style="@style/ywsq_group_tv"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:id="@+id/ywsq_group_tv2"
+                style="@style/ywsq_group_tv"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/ywsq_group_tv3"
+                style="@style/ywsq_group_tv"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:id="@+id/ywsq_group_tv4"
+                style="@style/ywsq_group_tv"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

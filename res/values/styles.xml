@@ -103,12 +103,37 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="my_tv">
+    <style name="mButtonYellow">
+        <item name="android:background">@drawable/button_selector_yellow</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmallInverse</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+
+    <style name="yw_detail_all_tv">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">5dp</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:textColor">#444</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="ywsq_group_tv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ywsq_child_tv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/red</item>
     </style>
 
 </resources>

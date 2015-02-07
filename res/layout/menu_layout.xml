@@ -17,7 +17,7 @@
             android:id="@+id/menu_user_logo"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/app_panel_friend" />
 
         <TextView
             android:id="@+id/menu_user_name"
@@ -25,24 +25,41 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
-            android:text="莫云鹏"
             android:textColor="#ffffff"
             android:textSize="25sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/menu_app_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/menu_bottom_ll"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/app_name"        android:textColor="#ffffff"
-        android:textSize="15sp" />
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/menu_setting"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:background="@null"
+            android:src="@drawable/button_selector_setting" />
+
+        <TextView
+            android:id="@+id/menu_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:background="@null"
+            android:gravity="left|center_vertical"
+            android:text="@string/base_menu_setting"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/menu_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/menu_app_name"
+        android:layout_above="@id/menu_bottom_ll"
         android:layout_below="@id/menu_user"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="15dip"
+    android:paddingLeft="15dip"
+    android:paddingRight="15dip"
+    android:paddingTop="40dip" >
+
+    <EditText
+        android:id="@+id/reason"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:hint="@string/ywsq_longclick_popview_dialog_agree"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="18sp" >
+    </EditText>
+
+</LinearLayout>

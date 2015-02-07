@@ -157,9 +157,7 @@
             android:id="@+id/btnLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip"
+            android:layout_margin="10dip"
             android:orientation="vertical" >
 
             <Button
@@ -172,12 +170,12 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/cancelBtn"
+                android:id="@+id/registerBtn"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dip"
                 android:background="@drawable/button_selector_white"
-                android:text="@string/cancel"
+                android:text="@string/register"
                 android:textColor="@color/gray"
                 android:textSize="20sp" />
         </LinearLayout>
