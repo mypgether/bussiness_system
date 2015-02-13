@@ -2,12 +2,12 @@ package net.bussiness.global;
 
 public class ConstServer {
 	// 内网
-	private static StringBuffer SERVER_ROOT = new StringBuffer(
-			"http://192.168.191.1:8080/bussiness/");
+	// private static StringBuffer SERVER_ROOT = new StringBuffer(
+	// "http://192.168.191.1:8080/bussiness/");
 
 	// nat123
-	// private static StringBuffer SERVER_ROOT = new StringBuffer(
-	// "http://gether.nat123.net:43169/bussiness/");
+	private static StringBuffer SERVER_ROOT = new StringBuffer(
+			"http://gether.nat123.net:43169/bussiness/");
 
 	// 花生壳
 	// private static StringBuffer SERVER_ROOT = new StringBuffer(
